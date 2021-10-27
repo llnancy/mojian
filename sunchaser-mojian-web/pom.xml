@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- ====================================================== -->
+    <!--                          父 POM                        -->
+    <!-- ====================================================== -->
+    <parent>
+        <artifactId>sunchaser-mojian</artifactId>
+        <groupId>com.sunchaser.mojian</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- ====================================================== -->
+    <!--                         POM 版本                       -->
+    <!-- ====================================================== -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ====================================================== -->
+    <!--                         POM GAV                        -->
+    <!-- ====================================================== -->
+    <artifactId>sunchaser-mojian-web</artifactId>
+    <version>${sunchaser-mojian-web.version}</version>
+
+    <!-- ====================================================== -->
+    <!--                         POM 类型                       -->
+    <!-- ====================================================== -->
+    <packaging>jar</packaging>
+
+    <!-- ====================================================== -->
+    <!--                       项目名和组织                      -->
+    <!-- ====================================================== -->
+    <name>${project.artifactId}</name>
+    <description>========== web模块 ==========</description>
+
+    <!-- ====================================================== -->
+    <!--                        开发者介绍                       -->
+    <!-- ====================================================== -->
+    <developers>
+        <developer>
+            <name>SunChaser</name>
+            <email>admin@lilu.org.cn</email>
+            <organization>SunChaser</organization>
+        </developer>
+    </developers>
+
+    <!-- ====================================================== -->
+    <!--                      组件依赖管理                        -->
+    <!-- ====================================================== -->
+    <dependencies>
+        <dependency>
+            <groupId>com.sunchaser.mojian</groupId>
+            <artifactId>sunchaser-mojian-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    </dependencies>
+</project>

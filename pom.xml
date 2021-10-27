@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- ====================================================== -->
+    <!--                         POM 版本                       -->
+    <!-- ====================================================== -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ====================================================== -->
+    <!--                         POM GAV                        -->
+    <!-- ====================================================== -->
+    <groupId>com.sunchaser.mojian</groupId>
+    <artifactId>sunchaser-mojian</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <!-- ====================================================== -->
+    <!--                         POM 类型                       -->
+    <!-- ====================================================== -->
+    <packaging>pom</packaging>
+
+    <!-- ====================================================== -->
+    <!--                       项目名和组织                      -->
+    <!-- ====================================================== -->
+    <name>sunchaser-mojian</name>
+    <description>魔剑</description>
+
+    <!-- ====================================================== -->
+    <!--                        开发者介绍                       -->
+    <!-- ====================================================== -->
+    <developers>
+        <developer>
+            <name>SunChaser</name>
+            <email>admin@lilu.org.cn</email>
+            <organization>SunChaser</organization>
+        </developer>
+    </developers>
+
+    <!-- ====================================================== -->
+    <!--                          多模块                         -->
+    <!-- ====================================================== -->
+    <modules>
+        <module>sunchaser-mojian-all</module>
+        <module>sunchaser-mojian-base</module>
+        <module>sunchaser-mojian-web</module>
+        <module>sunchaser-mojian-util</module>
+        <module>sunchaser-mojian-uploader</module>
+    </modules>
+
+    <!-- ====================================================== -->
+    <!--                      组件依赖管理                        -->
+    <!-- ====================================================== -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- JDK版本 -->
+        <jdk.version>8</jdk.version>
+
+        <!-- 项目构建相关 -->
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+
+        <!-- 子模块版本号管理-->
+        <sunchaser-mojian-base.version>1.0.0-SNAPSHOT</sunchaser-mojian-base.version>
+        <sunchaser-mojian-util.version>1.0.0-SNAPSHOT</sunchaser-mojian-util.version>
+        <sunchaser-mojian-web.version>1.0.0-SNAPSHOT</sunchaser-mojian-web.version>
+        <sunchaser-mojian-uploader.version>1.0.0-SNAPSHOT</sunchaser-mojian-uploader.version>
+
+        <!-- spring依赖 -->
+        <spring.boot.version>2.2.0.RELEASE</spring.boot.version>
+
+        <!-- MySQL相关依赖-->
+        <mybatis.plus.version>3.4.3.1</mybatis.plus.version>
+
+        <!-- 工具包相关依赖-->
+        <google.guava.version>30.0-jre</google.guava.version>
+        <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
+        <hutool.core.version>5.7.5</hutool.core.version>
+
+        <!-- 七牛云SDK -->
+        <qiniu.sdk.version>7.7.0</qiniu.sdk.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 子模块依赖管理 -->
+            <dependency>
+                <groupId>com.sunchaser.mojian</groupId>
+                <artifactId>sunchaser-mojian-base</artifactId>
+                <version>${sunchaser-mojian-base.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sunchaser.mojian</groupId>
+                <artifactId>sunchaser-mojian-util</artifactId>
+                <version>${sunchaser-mojian-util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sunchaser.mojian</groupId>
+                <artifactId>sunchaser-mojian-uploader</artifactId>
+                <version>${sunchaser-mojian-uploader.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sunchaser.mojian</groupId>
+                <artifactId>sunchaser-mojian-web</artifactId>
+                <version>${sunchaser-mojian-web.version}</version>
+            </dependency>
+
+            <!-- spring boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google.guava.version}</version>
+            </dependency>
+            <!-- apache lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons.lang3.version}</version>
+            </dependency>
+            <!-- hutool工具包-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.core.version}</version>
+            </dependency>
+            <!--七牛云SDK-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.sdk.version}</version>
+            </dependency>
+            <!-- MyBatis-Plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ====================================================== -->
+    <!--               项目构建（包名/默认目标/插件等）             -->
+    <!-- ====================================================== -->
+    <build>
+        <finalName>sunchaser-mojian</finalName>
+        <plugins>
+            <plugin>
+                <!-- https://docs.spring.io/spring-boot/docs/2.2.0.RELEASE/maven-plugin/usage.html -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests> <!-- 跳过单元测试 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
