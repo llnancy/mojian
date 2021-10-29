@@ -3,15 +3,12 @@ package com.sunchaser.mojian.uploader.impl.kodo;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.sunchaser.mojian.uploader.AbstractUploader;
 import com.sunchaser.mojian.uploader.exception.MoJianUploaderException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
@@ -23,20 +20,17 @@ import static com.sunchaser.mojian.uploader.autoconfigure.UploaderProperties.QiN
  * @since JDK8 2021/10/24
  */
 @Slf4j
-public class QiNiuCloudUploader extends AbstractUploader implements InitializingBean {
+public class QiNiuCloudUploader extends AbstractUploader {
 
     private static final String BASE_LOG = "上传七牛云";
 
-    private UploadManager uploadManager;
+    private final UploadManager uploadManager;
 
-    private Auth auth;
+    private final Auth auth;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Configuration configuration = new Configuration(Region.huanan());
-        uploadManager = new UploadManager(configuration);
-        QiNiu qiniu = this.uploaderProperties.getQiniu();
-        auth = Auth.create(qiniu.getAccessKey(), qiniu.getSecretKey());
+    public QiNiuCloudUploader(UploadManager uploadManager, Auth auth) {
+        this.uploadManager = uploadManager;
+        this.auth = auth;
     }
 
     @Override

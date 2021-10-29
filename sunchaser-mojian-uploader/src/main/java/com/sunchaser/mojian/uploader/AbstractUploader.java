@@ -6,20 +6,22 @@ import com.sunchaser.mojian.uploader.autoconfigure.UploaderProperties;
 import com.sunchaser.mojian.uploader.support.FileNameGenerator;
 import com.sunchaser.mojian.uploader.support.FileUriGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/22
  */
+@DependsOn(value = "uploaderProperties")
 public abstract class AbstractUploader implements Uploader {
     protected FileTypeEnum fileTypeEnum;
+
+    protected UploaderProperties uploaderProperties;
 
     private FileNameGenerator fileNameGenerator;
 
     private FileUriGenerator fileUriGenerator;
-
-    protected UploaderProperties uploaderProperties;
 
     @Autowired
     public void setFileNameGenerator(FileNameGenerator fileNameGenerator) {
@@ -36,9 +38,8 @@ public abstract class AbstractUploader implements Uploader {
         this.uploaderProperties = uploaderProperties;
     }
 
-    @Override
-    public FileTypeEnum getFileTypeEnum() {
-        return this.fileTypeEnum;
+    public void setFileTypeEnum(FileTypeEnum fileTypeEnum) {
+        this.fileTypeEnum = fileTypeEnum;
     }
 
     @Override

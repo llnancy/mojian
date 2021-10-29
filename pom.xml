@@ -45,6 +45,7 @@
         <module>sunchaser-mojian-web</module>
         <module>sunchaser-mojian-util</module>
         <module>sunchaser-mojian-uploader</module>
+        <module>sunchaser-mojian-starter</module>
     </modules>
 
     <!-- ====================================================== -->
@@ -64,6 +65,7 @@
         <sunchaser-mojian-util.version>1.0.0-SNAPSHOT</sunchaser-mojian-util.version>
         <sunchaser-mojian-web.version>1.0.0-SNAPSHOT</sunchaser-mojian-web.version>
         <sunchaser-mojian-uploader.version>1.0.0-SNAPSHOT</sunchaser-mojian-uploader.version>
+        <sunchaser-mojian-starter.version>1.0.0-SNAPSHOT</sunchaser-mojian-starter.version>
 
         <!-- spring依赖 -->
         <spring.boot.version>2.2.0.RELEASE</spring.boot.version>
@@ -102,6 +104,11 @@
                 <groupId>com.sunchaser.mojian</groupId>
                 <artifactId>sunchaser-mojian-web</artifactId>
                 <version>${sunchaser-mojian-web.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sunchaser.mojian</groupId>
+                <artifactId>sunchaser-mojian-starter</artifactId>
+                <version>${sunchaser-mojian-starter.version}</version>
             </dependency>
 
             <!-- spring boot -->

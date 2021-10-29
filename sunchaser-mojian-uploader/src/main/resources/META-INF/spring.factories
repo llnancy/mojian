@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.sunchaser.mojian.uploader.autoconfigure.UploaderAutoConfiguration,\
+com.sunchaser.mojian.uploader.autoconfigure.QiNiuUploaderAutoConfiguration

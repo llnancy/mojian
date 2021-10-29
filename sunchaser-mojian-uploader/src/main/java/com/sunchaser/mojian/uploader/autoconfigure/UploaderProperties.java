@@ -1,29 +1,28 @@
 package com.sunchaser.mojian.uploader.autoconfigure;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.qiniu.storage.Region;
+import com.sunchaser.mojian.util.Optionals;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/22
  */
-@Getter
-@EnableConfigurationProperties(UploaderProperties.class)
+@Data
 @ConfigurationProperties(prefix = "sunchaser.mojian.uploader")
 public class UploaderProperties {
     private String artifactId;
 
     private String namespace;
+
+    private String uploaderClassName;
 
     private final QiNiu qiniu = new QiNiu();
 
@@ -49,7 +48,8 @@ public class UploaderProperties {
             HUA_BEI("huabei", Region::huabei),
             HUA_NAN("huanan", Region::huanan),
             BEI_MEI("beimei", Region::beimei),
-            XIN_JIA_PO("xinjiapo", Region::xinjiapo)
+            XIN_JIA_PO("xinjiapo", Region::xinjiapo),
+            AUTO("auto", Region::autoRegion)
             ;
             private final String property;
             private final Supplier<Region> region;
@@ -64,8 +64,7 @@ public class UploaderProperties {
 
             public static Region matchRegionByProperty(String property) {
                 QiNiuRegionEnum qiNiuRegionEnum = enumMap.get(property);
-                Preconditions.checkArgument(Objects.nonNull(qiNiuRegionEnum), "七牛云配置机房不存在");
-                return qiNiuRegionEnum.region.get();
+                return Optionals.ofObject(qiNiuRegionEnum, AUTO).region.get();
             }
         }
     }
