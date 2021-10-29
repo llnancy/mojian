@@ -27,12 +27,15 @@ public class DefaultFileUriGenerator implements FileUriGenerator {
         String artifactId = StringUtils.isEmpty(properties.getArtifactId()) ? EMPTY : properties.getArtifactId() + FORWARD_SLASH;
         String namespace = StringUtils.isEmpty(properties.getNamespace()) ? EMPTY : properties.getNamespace() + FORWARD_SLASH;
         LocalDate now = LocalDate.now();
-        String year = String.valueOf(now.getYear());
-        String month = String.valueOf(now.getMonth().getValue());
-
+        String year = now.getYear() + FORWARD_SLASH;
+        String month = now.getMonth().getValue() + FORWARD_SLASH;
+        String day = now.getDayOfMonth() + FORWARD_SLASH;
         return artifactId +
                 namespace +
-                LocalDate.now().toString() + FORWARD_SLASH +
+                year +
+                month +
+                day +
                 fileNameGenerator.generateFileName(multipartFile);
     }
+
 }
