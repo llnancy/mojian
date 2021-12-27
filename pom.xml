@@ -59,6 +59,8 @@
         <!-- 项目构建相关 -->
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- 子模块版本号管理-->
         <sunchaser-mojian-base.version>1.0.0-SNAPSHOT</sunchaser-mojian-base.version>
