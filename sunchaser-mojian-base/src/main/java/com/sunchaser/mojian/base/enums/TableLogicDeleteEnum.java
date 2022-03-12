@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * 表state状态枚举
+ *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/7/17
  */
@@ -15,7 +16,7 @@ import java.util.Map;
 @AllArgsConstructor
 public enum TableLogicDeleteEnum {
     NORMAL(0, "正常"),
-    DELETED(1, "已删除")
+    DELETED(1, "已删除"),
     ;
     private final Integer state;
     private final String desc;

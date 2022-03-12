@@ -70,10 +70,10 @@
         <sunchaser-mojian-starter.version>1.0.0-SNAPSHOT</sunchaser-mojian-starter.version>
 
         <!-- spring依赖 -->
-        <spring.boot.version>2.2.0.RELEASE</spring.boot.version>
+        <spring.boot.version>2.6.4</spring.boot.version>
 
         <!-- MySQL相关依赖-->
-        <mybatis.plus.version>3.4.3.1</mybatis.plus.version>
+        <mybatis.plus.version>3.5.1</mybatis.plus.version>
 
         <!-- 工具包相关依赖-->
         <google.guava.version>30.0-jre</google.guava.version>

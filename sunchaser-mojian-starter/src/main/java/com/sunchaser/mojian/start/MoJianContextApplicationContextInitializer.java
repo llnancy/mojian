@@ -18,7 +18,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 扫描mojian
+ * 扫描mojian组件
+ *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/25
  */
@@ -26,7 +27,7 @@ public class MoJianContextApplicationContextInitializer implements ApplicationCo
     private final String[] packages;
 
     public MoJianContextApplicationContextInitializer() {
-        this.packages = new String[] {"com.sunchaser.mojian"};
+        this.packages = new String[]{"com.sunchaser.mojian"};
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 单对象响应
+ *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/24
  */

@@ -1,7 +1,5 @@
 package com.sunchaser.mojian.util;
 
-import cn.hutool.core.text.CharPool;
-
 import java.util.UUID;
 
 import static com.sunchaser.mojian.base.Constants.StringConstants.DASH;

@@ -25,7 +25,7 @@ import static com.sunchaser.mojian.base.Constants.StringConstants.EN_COMMA;
  * @since JDK8 2021/10/25
  */
 @RestControllerAdvice
-public class MoJianExceptionHandler {
+public class MjExceptionHandler {
 
     @Bean
     public Validator validator() {

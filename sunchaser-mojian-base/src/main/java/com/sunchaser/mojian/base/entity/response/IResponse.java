@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * 基本响应对象
  * 提供常见的响应code、msg
+ *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/24
  */
