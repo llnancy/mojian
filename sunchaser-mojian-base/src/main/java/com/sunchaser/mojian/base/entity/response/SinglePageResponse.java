@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SinglePageResponse<T extends Serializable> extends SingleResponse<T> {
+public class SinglePageResponse<T> extends SingleResponse<T> {
     private static final long serialVersionUID = 6047231376898018281L;
 
     private Long count = 0L;

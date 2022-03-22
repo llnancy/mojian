@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MultiPageResponse<T extends Serializable> extends MultiResponse<T> {
+public class MultiPageResponse<T> extends MultiResponse<T> {
     private static final long serialVersionUID = 5074494799013392843L;
 
     private Long count = 0L;
@@ -41,19 +41,19 @@ public class MultiPageResponse<T extends Serializable> extends MultiResponse<T> 
         this.hasNext = hasNext;
     }
 
-    public static <T extends Serializable> MultiPageResponse<T> success(Collection<T> data, Long count, Boolean hasNext) {
+    public static <T> MultiPageResponse<T> success(Collection<T> data, Long count, Boolean hasNext) {
         return success(IResponse.SUCCESS, data, count, hasNext);
     }
 
-    public static <T extends Serializable> MultiPageResponse<T> success(IResponse resp, Collection<T> data, Long count, Boolean hasNext) {
+    public static <T> MultiPageResponse<T> success(IResponse resp, Collection<T> data, Long count, Boolean hasNext) {
         return success(resp.getResultCode(), resp.getResultMsg(), data, count, hasNext);
     }
 
-    public static <T extends Serializable> MultiPageResponse<T> success(Integer resultCode, String resultMsg, Collection<T> data, Long count, Boolean hasNext) {
+    public static <T> MultiPageResponse<T> success(Integer resultCode, String resultMsg, Collection<T> data, Long count, Boolean hasNext) {
         return new MultiPageResponse<>(resultCode, resultMsg, data, count, hasNext);
     }
 
-    public static <T extends Serializable, R> MultiPageResponse<T> success(Page<R> page, Function<? super R, ? extends T> mapper) {
+    public static <T, R> MultiPageResponse<T> success(Page<R> page, Function<? super R, ? extends T> mapper) {
         List<T> collect = page.getRecords()
                 .stream()
                 .map(mapper)
@@ -61,15 +61,15 @@ public class MultiPageResponse<T extends Serializable> extends MultiResponse<T> 
         return success(collect, page.getTotal(), page.hasNext());
     }
 
-    public static <T extends Serializable> MultiPageResponse<T> failure() {
+    public static <T> MultiPageResponse<T> failure() {
         return failure(IResponse.FAILURE);
     }
 
-    public static <T extends Serializable> MultiPageResponse<T> failure(IResponse resp) {
+    public static <T> MultiPageResponse<T> failure(IResponse resp) {
         return new MultiPageResponse<>(resp.getResultCode(), resp.getResultMsg(), 0L, Boolean.FALSE);
     }
 
-    public static <T extends Serializable> MultiPageResponse<T> empty() {
+    public static <T> MultiPageResponse<T> empty() {
         return success(IResponse.SUCCESS, Collections.emptyList(), 0L, Boolean.FALSE);
     }
 }

@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MultiResponse<T extends Serializable> extends IResponse {
+public class MultiResponse<T> extends IResponse {
     private static final long serialVersionUID = 556787308052679453L;
 
     private Collection<T> data;
@@ -31,15 +31,15 @@ public class MultiResponse<T extends Serializable> extends IResponse {
         this.data = data;
     }
 
-    public static <T extends Serializable> MultiResponse<T> success(Collection<T> data) {
+    public static <T> MultiResponse<T> success(Collection<T> data) {
         return success(IResponse.SUCCESS, data);
     }
 
-    public static <T extends Serializable> MultiResponse<T> success(IResponse resp, Collection<T> data) {
+    public static <T> MultiResponse<T> success(IResponse resp, Collection<T> data) {
         return success(resp.getResultCode(), resp.getResultMsg(), data);
     }
 
-    public static <T extends Serializable> MultiResponse<T> success(Integer resultCode, String resultMsg, Collection<T> data) {
+    public static <T> MultiResponse<T> success(Integer resultCode, String resultMsg, Collection<T> data) {
         return new MultiResponse<>(resultCode, resultMsg, data);
     }
 }

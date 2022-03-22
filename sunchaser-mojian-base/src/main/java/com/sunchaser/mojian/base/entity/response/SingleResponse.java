@@ -3,8 +3,6 @@ package com.sunchaser.mojian.base.entity.response;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-
 /**
  * 单对象响应
  *
@@ -13,9 +11,9 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SingleResponse<T extends Serializable> extends IResponse {
+public class SingleResponse<T> extends IResponse {
 
-    private static final long serialVersionUID = -5708814403542927859L;
+    private static final long serialVersionUID = -6629737337259306630L;
 
     private T data;
 
@@ -31,23 +29,23 @@ public class SingleResponse<T extends Serializable> extends IResponse {
         this.data = data;
     }
 
-    public static <T extends Serializable> SingleResponse<T> success(T t) {
+    public static <T> SingleResponse<T> success(T t) {
         return success(IResponse.SUCCESS, t);
     }
 
-    public static <T extends Serializable> SingleResponse<T> success(IResponse resp, T t) {
+    public static <T> SingleResponse<T> success(IResponse resp, T t) {
         return success(resp.getResultCode(), resp.getResultMsg(), t);
     }
 
-    public static <T extends Serializable> SingleResponse<T> success(Integer resultCode, String resultMsg, T t) {
+    public static <T> SingleResponse<T> success(Integer resultCode, String resultMsg, T t) {
         return new SingleResponse<>(resultCode, resultMsg, t);
     }
 
-    public static <T extends Serializable> SingleResponse<T> failure() {
+    public static <T> SingleResponse<T> failure() {
         return failure(IResponse.FAILURE);
     }
 
-    public static <T extends Serializable> SingleResponse<T> failure(IResponse resp) {
+    public static <T> SingleResponse<T> failure(IResponse resp) {
         return new SingleResponse<>(resp.getResultCode(), resp.getResultMsg());
     }
 }
