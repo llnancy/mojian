@@ -6,8 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
-import static com.sunchaser.mojian.base.Constants.StringConstants.EMPTY;
-import static com.sunchaser.mojian.base.Constants.StringConstants.FORWARD_SLASH;
+import static com.sunchaser.mojian.base.constants.StringConstants.EMPTY;
+import static com.sunchaser.mojian.base.constants.StringConstants.FORWARD_SLASH;
 
 /**
  * @author sunchaser admin@lilu.org.cn
@@ -24,8 +24,8 @@ public class DefaultFileUriGenerator implements FileUriGenerator {
     @Override
     public String generateFileUri(MultipartFile multipartFile, FileNameGenerator fileNameGenerator) throws Exception {
         UploaderProperties properties = this.uploaderProperties;
-        String artifactId = StringUtils.isEmpty(properties.getArtifactId()) ? EMPTY : properties.getArtifactId() + FORWARD_SLASH;
-        String namespace = StringUtils.isEmpty(properties.getNamespace()) ? EMPTY : properties.getNamespace() + FORWARD_SLASH;
+        String artifactId = StringUtils.hasLength(properties.getArtifactId()) ? EMPTY : properties.getArtifactId() + FORWARD_SLASH;
+        String namespace = StringUtils.hasLength(properties.getNamespace()) ? EMPTY : properties.getNamespace() + FORWARD_SLASH;
         LocalDate now = LocalDate.now();
         String year = now.getYear() + FORWARD_SLASH;
         String month = now.getMonth().getValue() + FORWARD_SLASH;

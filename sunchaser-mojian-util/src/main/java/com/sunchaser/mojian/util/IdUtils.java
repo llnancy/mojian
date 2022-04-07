@@ -2,8 +2,8 @@ package com.sunchaser.mojian.util;
 
 import java.util.UUID;
 
-import static com.sunchaser.mojian.base.Constants.StringConstants.DASH;
-import static com.sunchaser.mojian.base.Constants.StringConstants.EMPTY;
+import static com.sunchaser.mojian.base.constants.StringConstants.DASH;
+import static com.sunchaser.mojian.base.constants.StringConstants.EMPTY;
 
 /**
  * @author sunchaser admin@lilu.org.cn

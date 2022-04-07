@@ -2,6 +2,7 @@ package com.sunchaser.mojian.base.entity.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 单对象响应
@@ -11,6 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 public class SingleResponse<T> extends IResponse {
 
     private static final long serialVersionUID = -6629737337259306630L;
@@ -33,7 +35,7 @@ public class SingleResponse<T> extends IResponse {
         return success(IResponse.SUCCESS, t);
     }
 
-    public static <T> SingleResponse<T> success(IResponse resp, T t) {
+    public static <T> SingleResponse<T> success(Response resp, T t) {
         return success(resp.getResultCode(), resp.getResultMsg(), t);
     }
 
@@ -45,7 +47,7 @@ public class SingleResponse<T> extends IResponse {
         return failure(IResponse.FAILURE);
     }
 
-    public static <T> SingleResponse<T> failure(IResponse resp) {
+    public static <T> SingleResponse<T> failure(Response resp) {
         return new SingleResponse<>(resp.getResultCode(), resp.getResultMsg());
     }
 }

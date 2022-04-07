@@ -1,6 +1,7 @@
 package com.sunchaser.mojian.base.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -40,6 +41,8 @@ public class JsonUtils {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         // 忽略在json字符串中存在，但是在Java类中不存在对应属性时抛出的异常
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // 解析含有结束语控制字符(如：ASCII<32，包含制表符\t、换行符\n和回车\r)
+        objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
         // 配置使用Java8的LocalDateTime时间模块，避免序列化和反序列化出错
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeUtils.DATE_TIME_FORMATTER));
@@ -70,7 +73,7 @@ public class JsonUtils {
 
     private static <T> T doToObject(String json, Class<T> clazz, ObjectMapper objectMapper) {
         try {
-            if (StringUtils.isEmpty(json)) {
+            if (StringUtils.isBlank(json)) {
                 return null;
             }
             checkClass(clazz);

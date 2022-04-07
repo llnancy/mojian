@@ -64,7 +64,7 @@ public class UploaderProperties {
 
             public static Region matchRegionByProperty(String property) {
                 QiNiuRegionEnum qiNiuRegionEnum = enumMap.get(property);
-                return Optionals.ofObject(qiNiuRegionEnum, AUTO).region.get();
+                return Optionals.of(qiNiuRegionEnum, AUTO).region.get();
             }
         }
     }

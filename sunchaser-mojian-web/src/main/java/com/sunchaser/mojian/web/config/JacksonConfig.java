@@ -24,14 +24,14 @@ import static com.sunchaser.mojian.base.util.DateTimeUtils.*;
  * @since JDK8 2022/3/18
  */
 @Configuration
-public class WebMvcConfig {
+public class JacksonConfig {
 
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = new ObjectMapper();
         // 格式化Date
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        objectMapper.setDateFormat(new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS));
 
         // 时间模块：格式化Java8的LocalDateTime
         JavaTimeModule javaTimeModule = new JavaTimeModule();

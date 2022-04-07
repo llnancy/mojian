@@ -2,6 +2,7 @@ package com.sunchaser.mojian.base.entity.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,6 +15,7 @@ import java.util.Collection;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 public class MultiResponse<T> extends IResponse {
     private static final long serialVersionUID = 556787308052679453L;
 

@@ -3,6 +3,7 @@ package com.sunchaser.mojian.base.entity.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * 基本响应对象
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class IResponse implements Response {
     private static final long serialVersionUID = -804559387002430359L;
 

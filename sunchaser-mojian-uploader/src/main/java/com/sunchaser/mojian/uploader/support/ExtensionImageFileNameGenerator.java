@@ -5,8 +5,8 @@ import com.sunchaser.mojian.util.ImageUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.sunchaser.mojian.base.Constants.StringConstants.DASH;
-import static com.sunchaser.mojian.base.Constants.StringConstants.UNDERSCORE;
+import static com.sunchaser.mojian.base.constants.StringConstants.DASH;
+import static com.sunchaser.mojian.base.constants.StringConstants.UNDERSCORE;
 
 /**
  *

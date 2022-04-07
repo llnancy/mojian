@@ -1,4 +1,4 @@
-package com.sunchaser.mojian.util;
+package com.sunchaser.mojian.base.util;
 
 import org.springframework.beans.BeanUtils;
 

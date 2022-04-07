@@ -3,6 +3,7 @@ package com.sunchaser.mojian.base.entity.response;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 public class MultiPageResponse<T> extends MultiResponse<T> {
     private static final long serialVersionUID = 5074494799013392843L;
 
