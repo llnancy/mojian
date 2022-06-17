@@ -36,7 +36,7 @@
         <apache.commons.lang3>3.9</apache.commons.lang3>
         <mybatis.starter.version>2.1.0</mybatis.starter.version>
         <druid.starter.version>1.1.10</druid.starter.version>
-        <alibaba.fastjson.version>1.2.60</alibaba.fastjson.version>
+        <alibaba.fastjson.version>1.2.83</alibaba.fastjson.version>
         <okhttp.version>3.11.0</okhttp.version>
         <guava.retrying.version>2.0.0</guava.retrying.version>
         <curator.framework.version>4.1.0</curator.framework.version>
