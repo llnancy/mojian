@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>sunchaser-mojian</artifactId>
-        <groupId>com.sunchaser.mojian</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>com.sunchaser.shushan</groupId>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,19 +17,15 @@
             <artifactId>spring-boot</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-base</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
-            <artifactId>sunchaser-mojian-util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-uploader</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-web</artifactId>
         </dependency>
     </dependencies>

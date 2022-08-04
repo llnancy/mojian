@@ -7,8 +7,8 @@
     <!-- ====================================================== -->
     <parent>
         <artifactId>sunchaser-mojian</artifactId>
-        <groupId>com.sunchaser.mojian</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>com.sunchaser.shushan</groupId>
+        <version>${revision}</version>
     </parent>
 
     <!-- ====================================================== -->
@@ -20,7 +20,6 @@
     <!--                         POM GAV                        -->
     <!-- ====================================================== -->
     <artifactId>sunchaser-mojian-base</artifactId>
-    <version>${sunchaser-mojian-base.version}</version>
 
     <!-- ====================================================== -->
     <!--                         POM 类型                       -->
@@ -72,6 +71,14 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
         </dependency>
     </dependencies>
 </project>

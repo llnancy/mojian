@@ -7,8 +7,8 @@
     <!-- ====================================================== -->
     <parent>
         <artifactId>sunchaser-mojian</artifactId>
-        <groupId>com.sunchaser.mojian</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>com.sunchaser.shushan</groupId>
+        <version>${revision}</version>
     </parent>
 
     <!-- ====================================================== -->
@@ -48,24 +48,16 @@
     <!-- ====================================================== -->
     <dependencies>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-base</artifactId>
-            <version>${sunchaser-mojian-base.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
-            <artifactId>sunchaser-mojian-util</artifactId>
-            <version>${sunchaser-mojian-util.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-uploader</artifactId>
-            <version>${sunchaser-mojian-uploader.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-web</artifactId>
-            <version>${sunchaser-mojian-web.version}</version>
         </dependency>
     </dependencies>
 </project>

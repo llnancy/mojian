@@ -7,8 +7,8 @@
     <!-- ====================================================== -->
     <parent>
         <artifactId>sunchaser-mojian</artifactId>
-        <groupId>com.sunchaser.mojian</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>com.sunchaser.shushan</groupId>
+        <version>${revision}</version>
     </parent>
 
     <!-- ====================================================== -->
@@ -20,7 +20,6 @@
     <!--                         POM GAV                        -->
     <!-- ====================================================== -->
     <artifactId>sunchaser-mojian-web</artifactId>
-    <version>${sunchaser-mojian-web.version}</version>
 
     <!-- ====================================================== -->
     <!--                         POM 类型                       -->
@@ -49,7 +48,7 @@
     <!-- ====================================================== -->
     <dependencies>
         <dependency>
-            <groupId>com.sunchaser.mojian</groupId>
+            <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-base</artifactId>
         </dependency>
         <dependency>

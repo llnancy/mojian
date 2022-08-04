@@ -10,9 +10,9 @@
     <!-- ====================================================== -->
     <!--                         POM GAV                        -->
     <!-- ====================================================== -->
-    <groupId>com.sunchaser.mojian</groupId>
+    <groupId>com.sunchaser.shushan</groupId>
     <artifactId>sunchaser-mojian</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <!-- ====================================================== -->
     <!--                         POM 类型                       -->
@@ -43,7 +43,6 @@
         <module>sunchaser-mojian-all</module>
         <module>sunchaser-mojian-base</module>
         <module>sunchaser-mojian-web</module>
-        <module>sunchaser-mojian-util</module>
         <module>sunchaser-mojian-uploader</module>
         <module>sunchaser-mojian-starter</module>
     </modules>
@@ -54,70 +53,62 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- JDK版本 -->
-        <jdk.version>8</jdk.version>
+        <java.version>8</java.version>
 
         <!-- 项目构建相关 -->
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-
-        <!-- 子模块版本号管理-->
-        <sunchaser-mojian-base.version>1.0.0-SNAPSHOT</sunchaser-mojian-base.version>
-        <sunchaser-mojian-util.version>1.0.0-SNAPSHOT</sunchaser-mojian-util.version>
-        <sunchaser-mojian-web.version>1.0.0-SNAPSHOT</sunchaser-mojian-web.version>
-        <sunchaser-mojian-uploader.version>1.0.0-SNAPSHOT</sunchaser-mojian-uploader.version>
-        <sunchaser-mojian-starter.version>1.0.0-SNAPSHOT</sunchaser-mojian-starter.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <revision>0.0.1-SNAPSHOT</revision>
+        <mojian.version>${revision}</mojian.version>
+        <!--maven plugin-->
+        <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
 
         <!-- spring依赖 -->
-        <spring.boot.version>2.6.4</spring.boot.version>
+        <springboot.version>2.7.2</springboot.version>
 
         <!-- MySQL相关依赖-->
-        <mybatis.plus.version>3.5.1</mybatis.plus.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
 
         <!-- 工具包相关依赖-->
-        <google.guava.version>30.0-jre</google.guava.version>
-        <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
-        <hutool.core.version>5.7.5</hutool.core.version>
+        <guava.version>30.0-jre</guava.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <hutool.version>5.7.5</hutool.version>
 
         <!-- 七牛云SDK -->
-        <qiniu.sdk.version>7.7.0</qiniu.sdk.version>
+        <qiniu-sdk.version>7.7.0</qiniu-sdk.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- 子模块依赖管理 -->
             <dependency>
-                <groupId>com.sunchaser.mojian</groupId>
+                <groupId>com.sunchaser.shushan</groupId>
                 <artifactId>sunchaser-mojian-base</artifactId>
-                <version>${sunchaser-mojian-base.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.sunchaser.mojian</groupId>
-                <artifactId>sunchaser-mojian-util</artifactId>
-                <version>${sunchaser-mojian-util.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sunchaser.mojian</groupId>
+                <groupId>com.sunchaser.shushan</groupId>
                 <artifactId>sunchaser-mojian-uploader</artifactId>
-                <version>${sunchaser-mojian-uploader.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.sunchaser.mojian</groupId>
+                <groupId>com.sunchaser.shushan</groupId>
                 <artifactId>sunchaser-mojian-web</artifactId>
-                <version>${sunchaser-mojian-web.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.sunchaser.mojian</groupId>
+                <groupId>com.sunchaser.shushan</groupId>
                 <artifactId>sunchaser-mojian-starter</artifactId>
-                <version>${sunchaser-mojian-starter.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -125,40 +116,47 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>${google.guava.version}</version>
+                <version>${guava.version}</version>
             </dependency>
             <!-- apache lang3 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${apache.commons.lang3.version}</version>
+                <version>${commons-lang3.version}</version>
             </dependency>
             <!-- hutool工具包-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
-                <version>${hutool.core.version}</version>
+                <version>${hutool.version}</version>
             </dependency>
             <!--七牛云SDK-->
             <dependency>
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>
-                <version>${qiniu.sdk.version}</version>
+                <version>${qiniu-sdk.version}</version>
             </dependency>
             <!-- MyBatis-Plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
     <!-- ====================================================== -->
     <!--               项目构建（包名/默认目标/插件等）             -->
     <!-- ====================================================== -->
     <build>
-        <finalName>sunchaser-mojian</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <!-- https://docs.spring.io/spring-boot/docs/2.2.0.RELEASE/maven-plugin/usage.html -->
@@ -166,8 +164,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -179,6 +177,39 @@
                     <skipTests>true</skipTests> <!-- 跳过单元测试 -->
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
