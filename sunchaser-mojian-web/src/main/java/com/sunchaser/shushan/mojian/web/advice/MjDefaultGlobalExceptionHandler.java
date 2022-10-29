@@ -19,7 +19,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -31,23 +30,24 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static cn.hutool.core.text.StrPool.COMMA;
-import static com.sunchaser.shushan.mojian.base.entity.response.IResponse.*;
+import static com.sunchaser.shushan.mojian.base.entity.response.IResponse.FAILURE;
+import static com.sunchaser.shushan.mojian.base.entity.response.IResponse.INVALID_PARAM;
+import static com.sunchaser.shushan.mojian.base.entity.response.IResponse.ofFailure;
 
 /**
- * 全局异常处理器
+ * 默认全局异常处理器
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/25
  */
-@RestControllerAdvice
 @Slf4j
-public class MjGlobalExceptionHandler {
+public class MjDefaultGlobalExceptionHandler {
 
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleBindException(BindException be) {
         return ofFailure(
-                INVALID_PARAM.getResultCode(),
+                INVALID_PARAM.getCode(),
                 be.getBindingResult()
                         .getFieldErrors()
                         .stream()
@@ -61,7 +61,7 @@ public class MjGlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleConstraintViolationException(ConstraintViolationException cve) {
         return ofFailure(
-                INVALID_PARAM.getResultCode(),
+                INVALID_PARAM.getCode(),
                 cve.getConstraintViolations()
                         .stream()
                         .map(ConstraintViolation::getMessage)
@@ -87,7 +87,7 @@ public class MjGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handle4xxClientError(Exception ex) {
-        return ofFailure(INVALID_PARAM.getResultCode(), ex.getMessage());
+        return ofFailure(INVALID_PARAM.getCode(), ex.getMessage());
     }
 
     @ExceptionHandler({
@@ -97,6 +97,6 @@ public class MjGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public IResponse handle5xxServerError(Exception ex) {
-        return ofFailure(FAILURE.getResultCode(), ex.getMessage());
+        return ofFailure(FAILURE.getCode(), ex.getMessage());
     }
 }

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import java.text.SimpleDateFormat;
@@ -17,7 +16,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static com.sunchaser.shushan.mojian.base.util.DateTimeUtils.*;
+import static com.sunchaser.shushan.mojian.base.util.DateTimeUtils.DATE_FORMATTER;
+import static com.sunchaser.shushan.mojian.base.util.DateTimeUtils.DATE_TIME_FORMATTER;
+import static com.sunchaser.shushan.mojian.base.util.DateTimeUtils.TIME_FORMATTER;
+import static com.sunchaser.shushan.mojian.base.util.DateTimeUtils.YYYY_MM_DD_HH_MM_SS;
 
 /**
  * Jackson config
@@ -25,8 +27,7 @@ import static com.sunchaser.shushan.mojian.base.util.DateTimeUtils.*;
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/3/18
  */
-@Configuration
-public class JacksonConfig {
+public class JacksonConfiguration {
 
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
