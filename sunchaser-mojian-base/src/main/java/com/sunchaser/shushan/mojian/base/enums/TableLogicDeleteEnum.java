@@ -16,8 +16,14 @@ import java.util.Map;
 @AllArgsConstructor
 public enum TableLogicDeleteEnum {
 
+    /**
+     * normal
+     */
     NORMAL(0, "正常"),
 
+    /**
+     * deleted
+     */
     DELETED(1, "已删除"),
     ;
 
@@ -25,14 +31,15 @@ public enum TableLogicDeleteEnum {
 
     private final String desc;
 
-    private static final Map<Integer, TableLogicDeleteEnum> enumMap = Maps.newHashMap();
+    private static final Map<Integer, TableLogicDeleteEnum> ENUM_MAP = Maps.newHashMap();
 
     static {
-        for (TableLogicDeleteEnum tableLogicDeleteEnum : TableLogicDeleteEnum.values())
-            enumMap.put(tableLogicDeleteEnum.state, tableLogicDeleteEnum);
+        for (TableLogicDeleteEnum tableLogicDeleteEnum : TableLogicDeleteEnum.values()) {
+            ENUM_MAP.put(tableLogicDeleteEnum.state, tableLogicDeleteEnum);
+        }
     }
 
-    public static TableLogicDeleteEnum getTableLoginDeleteEnumByState(Integer state) {
-        return enumMap.get(state);
+    public static TableLogicDeleteEnum match(Integer state) {
+        return ENUM_MAP.get(state);
     }
 }

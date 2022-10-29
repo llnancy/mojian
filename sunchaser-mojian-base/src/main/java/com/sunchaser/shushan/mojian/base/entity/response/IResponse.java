@@ -1,5 +1,6 @@
 package com.sunchaser.shushan.mojian.base.entity.response;
 
+import com.sunchaser.shushan.mojian.base.enums.ResponseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,15 +21,15 @@ public class IResponse implements Response {
 
     private static final long serialVersionUID = -804559387002430359L;
 
-    private Integer resultCode;
+    private Integer code;
 
-    private String resultMsg;
+    private String msg;
 
-    public static final IResponse SUCCESS = new IResponse(20000, "请求成功");
+    public static final IResponse SUCCESS = ResponseEnum.SUCCESS.toResponse();
 
-    public static final IResponse INVALID_PARAM = new IResponse(40000, "参数有误");
+    public static final IResponse INVALID_PARAM = ResponseEnum.INVALID_PARAM.toResponse();
 
-    public static final IResponse FAILURE = new IResponse(50000, "请求失败");
+    public static final IResponse FAILURE = ResponseEnum.FAILURE.toResponse();
 
     public static IResponse ofSuccess() {
         return SUCCESS;
@@ -38,7 +39,7 @@ public class IResponse implements Response {
         return FAILURE;
     }
 
-    public static IResponse ofFailure(Integer resultCode, String resultMsg) {
-        return new IResponse(resultCode, resultMsg);
+    public static IResponse ofFailure(Integer code, String msg) {
+        return new IResponse(code, msg);
     }
 }

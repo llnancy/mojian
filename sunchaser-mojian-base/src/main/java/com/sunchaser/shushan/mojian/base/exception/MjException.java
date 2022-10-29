@@ -1,5 +1,7 @@
 package com.sunchaser.shushan.mojian.base.exception;
 
+import com.sunchaser.shushan.mojian.base.enums.ResponseEnum;
+
 /**
  * mojian exception
  *
@@ -9,6 +11,21 @@ package com.sunchaser.shushan.mojian.base.exception;
 public class MjException extends RuntimeException {
 
     private static final long serialVersionUID = -3792616129754882226L;
+
+    /**
+     * 异常码
+     */
+    private Integer code;
+
+    public MjException(ResponseEnum responseEnum) {
+        super(responseEnum.getMsg());
+        this.code = responseEnum.getCode();
+    }
+
+    public MjException(Integer code, String message) {
+        super(message);
+        this.code = code;
+    }
 
     public MjException(String message) {
         super(message);
@@ -27,5 +44,9 @@ public class MjException extends RuntimeException {
     }
 
     public MjException() {
+    }
+
+    public Integer getCode() {
+        return code;
     }
 }

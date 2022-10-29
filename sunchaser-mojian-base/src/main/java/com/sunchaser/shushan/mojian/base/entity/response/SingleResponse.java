@@ -22,12 +22,12 @@ public class SingleResponse<T> extends IResponse {
     public SingleResponse() {
     }
 
-    public SingleResponse(Integer resultCode, String resultMsg) {
-        super(resultCode, resultMsg);
+    public SingleResponse(Integer code, String msg) {
+        super(code, msg);
     }
 
-    public SingleResponse(Integer resultCode, String resultMsg, T data) {
-        super(resultCode, resultMsg);
+    public SingleResponse(Integer code, String msg, T data) {
+        super(code, msg);
         this.data = data;
     }
 
@@ -36,11 +36,11 @@ public class SingleResponse<T> extends IResponse {
     }
 
     public static <T> SingleResponse<T> success(Response resp, T t) {
-        return success(resp.getResultCode(), resp.getResultMsg(), t);
+        return success(resp.getCode(), resp.getMsg(), t);
     }
 
-    public static <T> SingleResponse<T> success(Integer resultCode, String resultMsg, T t) {
-        return new SingleResponse<>(resultCode, resultMsg, t);
+    public static <T> SingleResponse<T> success(Integer code, String msg, T t) {
+        return new SingleResponse<>(code, msg, t);
     }
 
     public static <T> SingleResponse<T> failure() {
@@ -48,6 +48,6 @@ public class SingleResponse<T> extends IResponse {
     }
 
     public static <T> SingleResponse<T> failure(Response resp) {
-        return new SingleResponse<>(resp.getResultCode(), resp.getResultMsg());
+        return new SingleResponse<>(resp.getCode(), resp.getMsg());
     }
 }

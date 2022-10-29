@@ -3,7 +3,11 @@ package com.sunchaser.shushan.mojian.base.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -17,7 +21,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Json工具类
@@ -26,6 +34,7 @@ import java.util.*;
  * @since JDK8 2022/3/13
  */
 public class JsonUtils {
+
     private static final ObjectMapper COMMON_MAPPER = createObjectMapper();
     private static final ObjectMapper WITH_SHAKE_CASE_MAPPER = createObjectMapper();
     private static final ObjectMapper WITHOUT_NULL_MAPPER = createObjectMapper();
@@ -94,7 +103,7 @@ public class JsonUtils {
 
     public static <T> T toObject(String json, TypeReference<T> typeReference) {
         try {
-            if (StringUtils.isEmpty(json)) {
+            if (StringUtils.isBlank(json)) {
                 return null;
             }
             Preconditions.checkArgument(typeReference != null, "typeReference must not be null");
@@ -106,7 +115,7 @@ public class JsonUtils {
 
     public static <T> List<T> toList(String json, Class<T> clazz) {
         try {
-            if (StringUtils.isEmpty(json)) {
+            if (StringUtils.isBlank(json)) {
                 return Collections.emptyList();
             }
             checkClass(clazz);
@@ -119,7 +128,7 @@ public class JsonUtils {
 
     public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
         try {
-            if (StringUtils.isEmpty(json)) {
+            if (StringUtils.isBlank(json)) {
                 return Collections.emptyMap();
             }
             checkClass(keyClass, "key class must not be null");
@@ -133,7 +142,7 @@ public class JsonUtils {
 
     public static <T> Set<T> toSet(String json, Class<T> clazz) {
         try {
-            if (StringUtils.isEmpty(json)) {
+            if (StringUtils.isBlank(json)) {
                 return Collections.emptySet();
             }
             checkClass(clazz);

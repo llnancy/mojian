@@ -10,8 +10,17 @@ import java.io.Serializable;
  */
 public interface Response extends Serializable {
 
-    Integer getResultCode();
+    /**
+     * 返回状态码
+     *
+     * @return code
+     */
+    Integer getCode();
 
-    String getResultMsg();
-
+    /**
+     * 返回消息体
+     *
+     * @return msg
+     */
+    String getMsg();
 }

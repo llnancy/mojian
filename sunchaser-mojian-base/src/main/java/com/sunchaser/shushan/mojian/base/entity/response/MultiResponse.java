@@ -24,12 +24,12 @@ public class MultiResponse<T> extends IResponse {
     public MultiResponse() {
     }
 
-    public MultiResponse(Integer resultCode, String resultMsg) {
-        super(resultCode, resultMsg);
+    public MultiResponse(Integer code, String msg) {
+        super(code, msg);
     }
 
-    public MultiResponse(Integer resultCode, String resultMsg, Collection<T> data) {
-        super(resultCode, resultMsg);
+    public MultiResponse(Integer code, String msg, Collection<T> data) {
+        super(code, msg);
         this.data = data;
     }
 
@@ -38,10 +38,10 @@ public class MultiResponse<T> extends IResponse {
     }
 
     public static <T> MultiResponse<T> success(IResponse resp, Collection<T> data) {
-        return success(resp.getResultCode(), resp.getResultMsg(), data);
+        return success(resp.getCode(), resp.getMsg(), data);
     }
 
-    public static <T> MultiResponse<T> success(Integer resultCode, String resultMsg, Collection<T> data) {
-        return new MultiResponse<>(resultCode, resultMsg, data);
+    public static <T> MultiResponse<T> success(Integer code, String msg, Collection<T> data) {
+        return new MultiResponse<>(code, msg, data);
     }
 }

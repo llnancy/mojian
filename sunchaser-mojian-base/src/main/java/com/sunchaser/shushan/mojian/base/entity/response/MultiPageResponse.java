@@ -31,14 +31,14 @@ public class MultiPageResponse<T> extends MultiResponse<T> {
     public MultiPageResponse() {
     }
 
-    public MultiPageResponse(Integer resultCode, String resultMsg, Long count, Boolean hasNext) {
-        super(resultCode, resultMsg);
+    public MultiPageResponse(Integer code, String msg, Long count, Boolean hasNext) {
+        super(code, msg);
         this.count = count;
         this.hasNext = hasNext;
     }
 
-    public MultiPageResponse(Integer resultCode, String resultMsg, Collection<T> data, Long count, Boolean hasNext) {
-        super(resultCode, resultMsg, data);
+    public MultiPageResponse(Integer code, String msg, Collection<T> data, Long count, Boolean hasNext) {
+        super(code, msg, data);
         this.count = count;
         this.hasNext = hasNext;
     }
@@ -48,11 +48,11 @@ public class MultiPageResponse<T> extends MultiResponse<T> {
     }
 
     public static <T> MultiPageResponse<T> success(IResponse resp, Collection<T> data, Long count, Boolean hasNext) {
-        return success(resp.getResultCode(), resp.getResultMsg(), data, count, hasNext);
+        return success(resp.getCode(), resp.getMsg(), data, count, hasNext);
     }
 
-    public static <T> MultiPageResponse<T> success(Integer resultCode, String resultMsg, Collection<T> data, Long count, Boolean hasNext) {
-        return new MultiPageResponse<>(resultCode, resultMsg, data, count, hasNext);
+    public static <T> MultiPageResponse<T> success(Integer code, String msg, Collection<T> data, Long count, Boolean hasNext) {
+        return new MultiPageResponse<>(code, msg, data, count, hasNext);
     }
 
     public static <T, R> MultiPageResponse<T> success(Page<R> page, Function<? super R, ? extends T> mapper) {
@@ -68,7 +68,7 @@ public class MultiPageResponse<T> extends MultiResponse<T> {
     }
 
     public static <T> MultiPageResponse<T> failure(IResponse resp) {
-        return new MultiPageResponse<>(resp.getResultCode(), resp.getResultMsg(), 0L, Boolean.FALSE);
+        return new MultiPageResponse<>(resp.getCode(), resp.getMsg(), 0L, Boolean.FALSE);
     }
 
     public static <T> MultiPageResponse<T> empty() {

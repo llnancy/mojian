@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
  * @since JDK8 2021/10/22
  */
 public class ImageUtils {
+
     private ImageUtils() {
     }
 

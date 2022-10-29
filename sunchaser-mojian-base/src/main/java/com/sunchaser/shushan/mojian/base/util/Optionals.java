@@ -2,7 +2,12 @@ package com.sunchaser.shushan.mojian.base.util;
 
 import org.springframework.beans.BeanUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static cn.hutool.core.text.CharSequenceUtil.EMPTY;
 

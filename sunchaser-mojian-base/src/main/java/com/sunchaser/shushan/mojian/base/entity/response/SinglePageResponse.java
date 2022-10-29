@@ -26,8 +26,8 @@ public class SinglePageResponse<T> extends SingleResponse<T> {
     public SinglePageResponse() {
     }
 
-    public SinglePageResponse(Integer resultCode, String resultMsg, T data, Long count, Boolean hasNext) {
-        super(resultCode, resultMsg, data);
+    public SinglePageResponse(Integer code, String msg, T data, Long count, Boolean hasNext) {
+        super(code, msg, data);
         this.count = count;
         this.hasNext = hasNext;
     }
@@ -37,10 +37,10 @@ public class SinglePageResponse<T> extends SingleResponse<T> {
     }
 
     public static <T extends Serializable> SinglePageResponse<T> success(IResponse resp, T t, Long count, Boolean hasNext) {
-        return success(resp.getResultCode(), resp.getResultMsg(), t, count, hasNext);
+        return success(resp.getCode(), resp.getMsg(), t, count, hasNext);
     }
 
-    public static <T extends Serializable> SinglePageResponse<T> success(Integer resultCode, String resultMsg, T t, Long count, Boolean hasNext) {
-        return new SinglePageResponse<>(resultCode, resultMsg, t, count, hasNext);
+    public static <T extends Serializable> SinglePageResponse<T> success(Integer code, String msg, T t, Long count, Boolean hasNext) {
+        return new SinglePageResponse<>(code, msg, t, count, hasNext);
     }
 }
