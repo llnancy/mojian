@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <!-- 全局常量配置 -->
+    <!--
+    日志输出格式：
+    %-5level 日志级别
+    %d{yyyy-MM-dd HH:mm:ss.SSS} 日期
+    %c 全限定类名
+    %L 行号
+    %thread 线程名
+    %m/%msg 日志信息
+    %n 换行
+     -->
+    <!-- 控制台日志格式 -->
+    <property name="CONSOLE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%boldYellow(%thread)] %highlight(%-5level) %boldGreen(%logger)-[%L]-%m%n"/>
+    <!-- 文件日志格式 -->
+    <property name="FILE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger-[%L]-%m%n"/>
+    <!-- 日志文件根路径 -->
+    <property name="FILE_BASE_DIR" value="logs"/>
+
+    <!-- 控制台 appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 输出流对象，默认为 System.out，这里改为 System.err -->
+        <target>System.err</target>
+        <!-- 日志输出格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOLE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件 appender -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- 日志文件路径 -->
+        <file>${FILE_BASE_DIR}/logback.log</file>
+        <!-- 日志输出格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件拆分 appender -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件路径 -->
+        <file>${FILE_BASE_DIR}/rolling_logback.log</file>
+        <!-- 日志输出格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+        <!-- 日志拆分规则 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 按照时间和压缩格式生成文件名 -->
+            <fileNamePattern>${FILE_BASE_DIR}/rolling.%d{yyyy-MM-dd}.log-%i.zip</fileNamePattern>
+            <!-- 按照文件大小拆分 -->
+            <maxFileSize>128MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <!-- 日志级别过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- root logger 配置 -->
+    <root level="ALL">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</included>

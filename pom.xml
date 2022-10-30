@@ -45,6 +45,7 @@
         <module>sunchaser-mojian-web</module>
         <module>sunchaser-mojian-uploader</module>
         <module>sunchaser-mojian-starter</module>
+        <module>sunchaser-mojian-log</module>
     </modules>
 
     <!-- ====================================================== -->
@@ -74,7 +75,7 @@
         <!-- 工具包相关依赖-->
         <guava.version>30.0-jre</guava.version>
         <commons-lang3.version>3.9</commons-lang3.version>
-        <hutool.version>5.7.5</hutool.version>
+        <hutool.version>5.8.9</hutool.version>
 
         <!-- 七牛云SDK -->
         <qiniu-sdk.version>7.7.0</qiniu-sdk.version>
@@ -127,7 +128,7 @@
             <!-- hutool工具包-->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-core</artifactId>
+                <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
             <!--七牛云SDK-->

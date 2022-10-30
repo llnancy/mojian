@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.sunchaser.shushan.mojian.log.config.MjLogAutoConfiguration

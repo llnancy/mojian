@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
             <groupId>com.qiniu</groupId>
