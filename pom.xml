@@ -101,7 +101,7 @@
             </dependency>
             <dependency>
                 <groupId>com.sunchaser.shushan</groupId>
-                <artifactId>sunchaser-mojian-starter</artifactId>
+                <artifactId>sunchaser-mojian-log</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -181,6 +181,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
                 <configuration>
                     <updatePomFile>true</updatePomFile>
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>
@@ -203,14 +204,5 @@
                 </executions>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>flatten-maven-plugin</artifactId>
-                    <version>${flatten-maven-plugin.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 </project>

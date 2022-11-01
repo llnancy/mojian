@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.Map;
 
 /**
- * 表state状态枚举
+ * 表逻辑删除字段 is_deleted 值枚举
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/7/17
@@ -24,7 +24,7 @@ public enum TableLogicDeleteEnum {
     /**
      * deleted
      */
-    DELETED(1, "已删除"),
+    DELETED(1, "删除"),
     ;
 
     private final Integer state;

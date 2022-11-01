@@ -1,5 +1,6 @@
 package com.sunchaser.shushan.mojian.base.util;
 
+import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -46,25 +47,29 @@ public class JsonUtils {
     }
 
     private static ObjectMapper commonInit(ObjectMapper objectMapper) {
-        // 忽略空bean转对象异常
+        // 忽略空 bean 转对象异常
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        // 忽略在json字符串中存在，但是在Java类中不存在对应属性时抛出的异常
+        // 忽略在 json 字符串中存在，但是在 Java 类中不存在对应属性时抛出的异常
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 解析含有结束语控制字符(如：ASCII<32，包含制表符\t、换行符\n和回车\r)
+        // 解析含有结束语控制字符(如：ASCII < 32，包含制表符 \t、换行符 \n 和回车 \r)
         objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
-        // 配置使用Java8的LocalDateTime时间模块，避免序列化和反序列化出错
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeUtils.DATE_TIME_FORMATTER));
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeUtils.DATE_FORMATTER));
-        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeUtils.TIME_FORMATTER));
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeUtils.DATE_TIME_FORMATTER));
-        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeUtils.DATE_FORMATTER));
-        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeUtils.TIME_FORMATTER));
-        objectMapper.registerModule(javaTimeModule);
+        // 配置使用 Java8 的 LocalDateTime 时间模块，避免序列化和反序列化出错
+        configureJava8Time(objectMapper);
         return objectMapper;
     }
 
-    private static ObjectMapper createObjectMapper() {
+    public static void configureJava8Time(ObjectMapper objectMapper) {
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DatePattern.NORM_DATETIME_FORMATTER));
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DatePattern.NORM_DATE_FORMATTER));
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DatePattern.NORM_TIME_FORMATTER));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DatePattern.NORM_DATETIME_FORMATTER));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DatePattern.NORM_DATE_FORMATTER));
+        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DatePattern.NORM_TIME_FORMATTER));
+        objectMapper.registerModule(javaTimeModule);
+    }
+
+    public static ObjectMapper createObjectMapper() {
         return new ObjectMapper();
     }
 
