@@ -1,7 +1,7 @@
 package com.sunchaser.shushan.mojian.web.advice;
 
 import com.sunchaser.shushan.mojian.base.entity.response.IResponse;
-import com.sunchaser.shushan.mojian.base.exception.MjException;
+import com.sunchaser.shushan.mojian.base.exception.MjBaseBizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
@@ -93,7 +93,7 @@ public class MjDefaultGlobalExceptionHandler {
     @ExceptionHandler({
             SQLIntegrityConstraintViolationException.class,
             RuntimeException.class,
-            MjException.class
+            MjBaseBizException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public IResponse handle5xxServerError(Exception ex) {

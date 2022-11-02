@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(MjLogProperties.class)
 @ConditionalOnWebApplication
-@ConditionalOnProperty(name = MjLogProperties.PREFIX + "enable", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = MjLogProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
 public class MjLogAutoConfiguration {
 
     @Bean

@@ -26,16 +26,6 @@ public enum ResponseEnum implements Response {
 
     private final String msg;
 
-    @Override
-    public Integer getCode() {
-        return code;
-    }
-
-    @Override
-    public String getMsg() {
-        return msg;
-    }
-
     public IResponse toResponse() {
         return new IResponse(this.code, this.msg);
     }

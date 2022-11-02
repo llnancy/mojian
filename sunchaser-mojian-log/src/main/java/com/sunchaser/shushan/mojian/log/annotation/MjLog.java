@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface MjLog {
 
-    String value();
+    String value() default "";
 
     boolean enableParameters() default true;
 
