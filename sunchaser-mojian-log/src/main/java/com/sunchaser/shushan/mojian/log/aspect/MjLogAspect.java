@@ -108,7 +108,7 @@ public class MjLogAspect implements ApplicationContextAware {
         try {
             MjLogBean logBean = LOG_BEAN_THREAD_LOCAL.get();
             logBean.setRequestStatus(RequestStatus.EXCEPTION);
-            logBean.setErrorMsg(ThrowableUtils.toString(e));
+            logBean.setErrorMsg(ThrowableUtils.printStackTrace(e));
             publishEvent(logBean);
         } catch (Throwable t) {
             LOG_BEAN_THREAD_LOCAL.remove();

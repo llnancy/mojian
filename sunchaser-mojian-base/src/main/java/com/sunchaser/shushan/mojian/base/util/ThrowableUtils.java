@@ -14,7 +14,7 @@ public final class ThrowableUtils {
     private ThrowableUtils() {
     }
 
-    public static String toString(Throwable t) {
+    public static String printStackTrace(Throwable t) {
         StringWriter writer = new StringWriter();
         try (PrintWriter pw = new PrintWriter(writer)) {
             t.printStackTrace(pw);
