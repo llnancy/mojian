@@ -46,6 +46,7 @@ public class MjDefaultGlobalExceptionHandler {
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleBindException(BindException be) {
+        log.error("", be);
         return ofFailure(
                 INVALID_PARAM.getCode(),
                 be.getBindingResult()
@@ -60,6 +61,7 @@ public class MjDefaultGlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleConstraintViolationException(ConstraintViolationException cve) {
+        log.error("", cve);
         return ofFailure(
                 INVALID_PARAM.getCode(),
                 cve.getConstraintViolations()
@@ -87,6 +89,7 @@ public class MjDefaultGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handle4xxClientError(Exception ex) {
+        log.error("", ex);
         return ofFailure(INVALID_PARAM.getCode(), ex.getMessage());
     }
 
@@ -97,6 +100,7 @@ public class MjDefaultGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public IResponse handle5xxServerError(Exception ex) {
+        log.error("", ex);
         return ofFailure(FAILURE.getCode(), ex.getMessage());
     }
 }
