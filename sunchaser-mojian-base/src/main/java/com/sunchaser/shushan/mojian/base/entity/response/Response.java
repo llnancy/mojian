@@ -23,4 +23,13 @@ public interface Response extends Serializable {
      * @return msg
      */
     String getMsg();
+
+    /**
+     * 转化成 IResponse 基本响应对象
+     *
+     * @return IResponse
+     */
+    default IResponse toResponse() {
+        return new IResponse(this.getCode(), this.getMsg());
+    }
 }
