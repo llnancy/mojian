@@ -1,6 +1,6 @@
 package com.sunchaser.shushan.mojian.web.annotation;
 
-import com.sunchaser.shushan.mojian.web.config.ValidatorConfiguration;
+import com.sunchaser.shushan.mojian.web.validation.config.ValidatorConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

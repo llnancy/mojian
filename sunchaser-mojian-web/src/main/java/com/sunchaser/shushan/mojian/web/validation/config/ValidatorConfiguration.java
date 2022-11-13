@@ -1,4 +1,4 @@
-package com.sunchaser.shushan.mojian.web.config;
+package com.sunchaser.shushan.mojian.web.validation.config;
 
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
