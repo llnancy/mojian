@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static cn.hutool.core.text.CharSequenceUtil.EMPTY;
-
 /**
  * Optional util
  *
@@ -31,7 +29,7 @@ public class Optionals {
     }
 
     public static String of(String str) {
-        return of(str, EMPTY);
+        return of(str, "");
     }
 
     public static Boolean ofFalse(Boolean bool) {
