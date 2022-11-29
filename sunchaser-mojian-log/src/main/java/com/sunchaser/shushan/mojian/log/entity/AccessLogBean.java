@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * mj log bean
+ * access log bean
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/10/29
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MjLogBean {
+public class AccessLogBean {
 
     /**
      * app id
@@ -60,9 +60,14 @@ public class MjLogBean {
     private String requestMethod;
 
     /**
-     * 请求类名 + 方法名
+     * 请求类名
      */
-    private String service;
+    private String className;
+
+    /**
+     * 请求方法名
+     */
+    private String methodName;
 
     /**
      * request status

@@ -7,19 +7,21 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * mj log
+ * access log
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/10/29
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface MjLog {
+public @interface AccessLog {
 
     String value() default "";
 
-    boolean enableParameters() default true;
+    boolean enableRequest() default true;
 
     boolean enableResponse() default true;
+
+    boolean enableRt() default true;
 }

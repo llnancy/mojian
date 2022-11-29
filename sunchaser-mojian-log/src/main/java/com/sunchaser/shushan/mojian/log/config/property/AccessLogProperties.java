@@ -1,20 +1,21 @@
-package com.sunchaser.shushan.mojian.log.config;
+package com.sunchaser.shushan.mojian.log.config.property;
 
-import lombok.Data;
+import static com.sunchaser.shushan.mojian.log.config.property.AccessLogProperties.PREFIX;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import static com.sunchaser.shushan.mojian.log.config.MjLogProperties.PREFIX;
 
 
 /**
- * log properties
+ * access log properties
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/10/30
  */
-@Data
+@Getter
+@Setter
 @ConfigurationProperties(prefix = PREFIX)
-public class MjLogProperties {
+public class AccessLogProperties {
 
     public static final String PREFIX = "mj.log";
 
