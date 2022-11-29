@@ -53,32 +53,17 @@
     <!-- ====================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- JDK版本 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>8</java.version>
-
-        <!-- 项目构建相关 -->
+        <!--maven plugin-->
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
         <revision>0.0.1-SNAPSHOT</revision>
         <mojian.version>${revision}</mojian.version>
-        <!--maven plugin-->
-        <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
-
-        <!-- spring依赖 -->
-        <springboot.version>2.7.2</springboot.version>
-
-        <!-- MySQL相关依赖-->
-        <mybatis-plus.version>3.5.1</mybatis-plus.version>
-
-        <!-- 工具包相关依赖-->
-        <guava.version>30.0-jre</guava.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <hutool.version>5.8.9</hutool.version>
-
-        <!-- 七牛云SDK -->
-        <qiniu-sdk.version>7.7.0</qiniu-sdk.version>
+        <springboot.version>2.7.6</springboot.version>
     </properties>
 
     <dependencyManagement>
@@ -112,36 +97,6 @@
                 <version>${springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!-- guava -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <!-- apache lang3 -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-            <!-- hutool工具包-->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <!--七牛云SDK-->
-            <dependency>
-                <groupId>com.qiniu</groupId>
-                <artifactId>qiniu-java-sdk</artifactId>
-                <version>${qiniu-sdk.version}</version>
-            </dependency>
-            <!-- MyBatis-Plus -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

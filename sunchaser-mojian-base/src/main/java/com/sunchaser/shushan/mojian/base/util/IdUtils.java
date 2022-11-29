@@ -1,10 +1,6 @@
 package com.sunchaser.shushan.mojian.base.util;
 
-import cn.hutool.core.text.StrPool;
-
 import java.util.UUID;
-
-import static cn.hutool.core.text.CharSequenceUtil.EMPTY;
 
 /**
  * ID util
@@ -22,7 +18,7 @@ public class IdUtils {
     }
 
     public static String simpleUUID() {
-        return randomUUID().replaceAll(StrPool.DASHED, EMPTY);
+        return randomUUID().replaceAll("-", "");
     }
 
     public static String simpleUUIDWithSuffix(String suffix) {
