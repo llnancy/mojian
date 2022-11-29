@@ -10,13 +10,16 @@
     </div>
 </div>
 
-## 魔剑
+# 魔剑
 
 由景天的前世姜国太子龙阳所铸，因姜国公主龙葵的室女之血而成。
 
-## 模块
+# 概述
 
-- `sunchaser-mojian-base`: 提供基础能力。
-- `sunchaser-mojian-util`: 提供常用工具。
-- `sunchaser-mojian-web`: 提供 `web` 开发能力。
-- `sunchaser-mojian-log`: 提供日志切面能力。
+`sunchaser-mojian` 是一个微服务业务开发脚手架，致力于让业务开发更高效。
+
+# 组件列表
+
+- `sunchaser-mojian-base`: 提供 `HTTP` 接口统一响应体、常用业务状态码枚举及常用工具类等。
+- `sunchaser-mojian-web`: 提供 `Web` 业务开发常用功能，包含全局异常处理器、`Jackson` 日期格式化配置、`JSR303` 分组校验接口及快速失败配置。
+- `sunchaser-mojian-log`: 基于 `Spring AOP` 和注解实现的日志记录组件。
