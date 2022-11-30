@@ -19,9 +19,10 @@
     </properties>
 
     <dependencies>
+        <!-- org.springframework/spring-core -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -47,6 +48,12 @@
         <dependency>
             <groupId>com.sunchaser.shushan</groupId>
             <artifactId>sunchaser-mojian-base</artifactId>
+        </dependency>
+        <!-- cn.hutool/hutool-extra -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+            <version>5.8.10</version>
         </dependency>
     </dependencies>
 </project>
