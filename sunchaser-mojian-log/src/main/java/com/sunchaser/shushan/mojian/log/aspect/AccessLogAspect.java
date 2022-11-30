@@ -1,7 +1,6 @@
 package com.sunchaser.shushan.mojian.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import com.sunchaser.shushan.mojian.base.util.JsonUtils;
 import com.sunchaser.shushan.mojian.base.util.Optionals;
 import com.sunchaser.shushan.mojian.base.util.ThrowableUtils;
@@ -67,7 +66,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
             alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
             alb.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-            alb.setRequestIp(ServletUtil.getClientIP(request));
+            // todo alb.setRequestIp(ServletUtil.getClientIP(request));
             alb.setRequestUri(URLUtil.getPath(request.getRequestURI()));
             alb.setRequestMethod(request.getMethod());
             alb.setClassName(joinPoint.getTarget().getClass().getName());
