@@ -1,6 +1,7 @@
 package com.sunchaser.shushan.mojian.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import com.sunchaser.shushan.mojian.base.util.JsonUtils;
 import com.sunchaser.shushan.mojian.base.util.Optionals;
 import com.sunchaser.shushan.mojian.base.util.ThrowableUtils;
@@ -22,7 +23,6 @@ import static org.springframework.beans.factory.xml.BeanDefinitionParserDelegate
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.HttpHeaders;
-import org.springframework.lang.NonNull;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -46,7 +46,7 @@ public class AccessLogAspect implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
@@ -67,7 +67,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
             alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
             alb.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-            // todo alb.setRequestIp(ServletUtil.getClientIP(request));
+            alb.setRequestIp(ServletUtil.getClientIP(request));
             alb.setRequestUri(URLUtil.getPath(request.getRequestURI()));
             alb.setRequestMethod(request.getMethod());
             alb.setClassName(joinPoint.getTarget().getClass().getName());
@@ -81,7 +81,6 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setStartTime(LocalDateTime.now());
             LOG_BEAN_THREAD_LOCAL.set(alb);
         } catch (Throwable t) {
-            System.out.println("before-catch: exception");
             LOG_BEAN_THREAD_LOCAL.remove();
             throw t;
         }
@@ -96,7 +95,6 @@ public class AccessLogAspect implements ApplicationContextAware {
             }
             publishEvent(alb, accessLog.enableRt());
         } catch (Throwable t) {
-            System.out.println("after-catch: exception");
             LOG_BEAN_THREAD_LOCAL.remove();
             throw t;
         }
@@ -110,7 +108,6 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setErrorMsg(ThrowableUtils.printStackTrace(e));
             publishEvent(alb, accessLog.enableRt());
         } catch (Throwable t) {
-            System.out.println("afterThrowing-catch: exception");
             LOG_BEAN_THREAD_LOCAL.remove();
             throw t;
         }
