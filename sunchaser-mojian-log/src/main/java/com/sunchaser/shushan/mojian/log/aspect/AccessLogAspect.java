@@ -1,6 +1,7 @@
 package com.sunchaser.shushan.mojian.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import com.sunchaser.shushan.mojian.base.util.JsonUtils;
 import com.sunchaser.shushan.mojian.base.util.Optionals;
 import com.sunchaser.shushan.mojian.base.util.ThrowableUtils;
@@ -51,11 +52,19 @@ public class AccessLogAspect implements ApplicationContextAware {
 
     private static final ThreadLocal<AccessLogBean> LOG_BEAN_THREAD_LOCAL = ThreadLocal.withInitial(AccessLogBean::new);
 
-    @Pointcut(value = "@annotation(com.sunchaser.shushan.mojian.log.annotation.AccessLog) || @within(com.sunchaser.shushan.mojian.log.annotation.AccessLog)")
-    public void accessLogPointCut() {
+    /**
+     * annotation 方法拦截
+     * within 类拦截
+     */
+    @Pointcut("@annotation(com.sunchaser.shushan.mojian.log.annotation.AccessLog) || @within(com.sunchaser.shushan.mojian.log.annotation.AccessLog)")
+    public void accessLogPointcut() {
     }
 
-    @Before("accessLogPointCut() && (@annotation(accessLog) || @within(accessLog))")
+    @Pointcut("!@annotation(com.sunchaser.shushan.mojian.log.annotation.LogIgnore)")
+    public void logIgnorePointcut() {
+    }
+
+    @Before("(accessLogPointcut() && logIgnorePointcut()) && (@annotation(accessLog) || @within(accessLog))")
     public void before(JoinPoint joinPoint, AccessLog accessLog) {
         try {
             ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -66,7 +75,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
             alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
             alb.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-            // todo alb.setRequestIp(ServletUtil.getClientIP(request));
+            alb.setRequestIp(ServletUtil.getClientIP(request));
             alb.setRequestUri(URLUtil.getPath(request.getRequestURI()));
             alb.setRequestMethod(request.getMethod());
             alb.setClassName(joinPoint.getTarget().getClass().getName());
@@ -85,7 +94,7 @@ public class AccessLogAspect implements ApplicationContextAware {
         }
     }
 
-    @AfterReturning(value = "accessLogPointCut() && (@annotation(accessLog) || @within(accessLog))", returning = "result")
+    @AfterReturning(value = "(accessLogPointcut() && logIgnorePointcut()) && (@annotation(accessLog) || @within(accessLog))", returning = "result")
     public void afterReturning(AccessLog accessLog, Object result) {
         try {
             AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
@@ -99,16 +108,16 @@ public class AccessLogAspect implements ApplicationContextAware {
         }
     }
 
-    @AfterThrowing(value = "accessLogPointCut() && (@annotation(accessLog) || @within(accessLog))", throwing = "e")
-    public void afterThrowing(AccessLog accessLog, Throwable e) {
+    @AfterThrowing(value = "(accessLogPointcut() && logIgnorePointcut()) && (@annotation(accessLog) || @within(accessLog))", throwing = "t")
+    public void afterThrowing(AccessLog accessLog, Throwable t) {
         try {
             AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
             alb.setRequestStatus(RequestStatus.EXCEPTION);
-            alb.setErrorMsg(ThrowableUtils.printStackTrace(e));
+            alb.setErrorMsg(ThrowableUtils.printStackTrace(t));
             publishEvent(alb, accessLog.enableRt());
-        } catch (Throwable t) {
+        } catch (Throwable th) {
             LOG_BEAN_THREAD_LOCAL.remove();
-            throw t;
+            throw th;
         }
     }
 
