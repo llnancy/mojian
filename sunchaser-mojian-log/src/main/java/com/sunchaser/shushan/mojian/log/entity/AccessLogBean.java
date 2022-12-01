@@ -87,7 +87,7 @@ public class AccessLogBean {
     /**
      * request status
      */
-    private RequestStatus requestStatus;
+    private RequestStatus status;
 
     /**
      * request parameters
@@ -100,9 +100,9 @@ public class AccessLogBean {
     private String response;
 
     /**
-     * error msg
+     * exception msg
      */
-    private String errorMsg;
+    private String exception;
 
     /**
      * start time
