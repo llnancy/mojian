@@ -40,14 +40,29 @@ public class AccessLogBean {
     private String spanId;
 
     /**
-     * user-agent
-     */
-    private String userAgent;
-
-    /**
      * request ip
      */
     private String requestIp;
+
+    /**
+     * device type
+     */
+    private String deviceType;
+
+    /**
+     * browser
+     */
+    private String browser;
+
+    /**
+     * os
+     */
+    private String os;
+
+    /**
+     * region
+     */
+    private String region;
 
     /**
      * request uri

@@ -17,5 +17,6 @@ public class AccessLogTest {
     @Test
     public void test() {
         String res = service.doLog("log");
+        String ignore = service.ignore("ignore");
     }
 }
