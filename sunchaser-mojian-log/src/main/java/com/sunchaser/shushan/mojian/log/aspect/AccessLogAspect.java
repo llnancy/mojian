@@ -95,7 +95,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setRequestMethod(request.getMethod());
             alb.setClassName(joinPoint.getTarget().getClass().getName());
             alb.setMethodName(joinPoint.getSignature().getName());
-            alb.setRequestStatus(RequestStatus.SUCCESS);
+            alb.setStatus(RequestStatus.SUCCESS);
             if (accessLog.enableRequest()) {
                 // 方法参数列表
                 Object[] args = joinPoint.getArgs();
@@ -128,8 +128,8 @@ public class AccessLogAspect implements ApplicationContextAware {
     public void afterThrowing(AccessLog accessLog, Throwable t) {
         try {
             AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
-            alb.setRequestStatus(RequestStatus.EXCEPTION);
-            alb.setErrorMsg(ThrowableUtils.printStackTrace(t));
+            alb.setStatus(RequestStatus.EXCEPTION);
+            alb.setException(ThrowableUtils.printStackTrace(t));
             publishEvent(alb, accessLog.enableRt());
         } catch (Throwable th) {
             LOG_BEAN_THREAD_LOCAL.remove();
