@@ -52,15 +52,11 @@
     <!--                      组件依赖管理                        -->
     <!-- ====================================================== -->
     <properties>
+        <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>8</java.version>
-        <!--maven plugin-->
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
         <revision>0.0.1-SNAPSHOT</revision>
         <mojian.version>${revision}</mojian.version>
         <springboot.version>2.7.6</springboot.version>
@@ -68,28 +64,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- 子模块依赖管理 -->
-            <dependency>
-                <groupId>com.sunchaser.shushan</groupId>
-                <artifactId>sunchaser-mojian-base</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sunchaser.shushan</groupId>
-                <artifactId>sunchaser-mojian-uploader</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sunchaser.shushan</groupId>
-                <artifactId>sunchaser-mojian-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sunchaser.shushan</groupId>
-                <artifactId>sunchaser-mojian-log</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
             <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -118,7 +92,7 @@
                 <!-- https://docs.spring.io/spring-boot/docs/2.2.0.RELEASE/maven-plugin/usage.html -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
+                <version>3.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -126,9 +100,23 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
+                <version>2.21.0</version>
                 <configuration>
                     <skipTests>true</skipTests> <!-- 跳过单元测试 -->
                 </configuration>
@@ -136,7 +124,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
+                <version>1.2.7</version>
                 <configuration>
                     <updatePomFile>true</updatePomFile>
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>

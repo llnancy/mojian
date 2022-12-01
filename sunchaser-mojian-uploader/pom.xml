@@ -6,9 +6,10 @@
     <!--                          父 POM                        -->
     <!-- ====================================================== -->
     <parent>
-        <artifactId>sunchaser-mojian</artifactId>
+        <artifactId>sunchaser-mojian-all</artifactId>
         <groupId>com.sunchaser.shushan</groupId>
         <version>${revision}</version>
+        <relativePath>../sunchaser-mojian-all</relativePath>
     </parent>
 
     <!-- ====================================================== -->
