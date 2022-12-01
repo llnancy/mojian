@@ -8,8 +8,10 @@ import com.sunchaser.shushan.mojian.base.util.ThrowableUtils;
 import com.sunchaser.shushan.mojian.log.annotation.AccessLog;
 import com.sunchaser.shushan.mojian.log.config.property.AccessLogProperties;
 import com.sunchaser.shushan.mojian.log.entity.AccessLogBean;
-import static com.sunchaser.shushan.mojian.log.entity.AccessLogBean.RequestStatus;
 import com.sunchaser.shushan.mojian.log.event.AccessLogEvent;
+import com.sunchaser.shushan.mojian.log.util.Ip2regionUtils;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -19,7 +21,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.BeansException;
-import static org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.DEFAULT_VALUE;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
+import static com.sunchaser.shushan.mojian.log.entity.AccessLogBean.RequestStatus;
+import static org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.DEFAULT_VALUE;
 
 /**
  * access log aspect
@@ -74,8 +78,19 @@ public class AccessLogAspect implements ApplicationContextAware {
             String activeProfiles = StringUtils.join(applicationContext.getEnvironment().getActiveProfiles(), ",");
             alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
             alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
-            alb.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-            alb.setRequestIp(ServletUtil.getClientIP(request));
+            if (accessLog.enableUserAgent()) {
+                String uaHeader = request.getHeader(HttpHeaders.USER_AGENT);
+                UserAgent userAgent = UserAgent.parseUserAgentString(uaHeader);
+                OperatingSystem os = userAgent.getOperatingSystem();
+                alb.setDeviceType(os.getDeviceType().toString());
+                alb.setOs(os.getName());
+                alb.setBrowser(userAgent.getBrowser().toString());
+            }
+            String clientIP = ServletUtil.getClientIP(request);
+            alb.setRequestIp(clientIP);
+            if (accessLog.enableRegion()) {
+                alb.setRegion(Ip2regionUtils.searchFriendlyRegion(clientIP));
+            }
             alb.setRequestUri(URLUtil.getPath(request.getRequestURI()));
             alb.setRequestMethod(request.getMethod());
             alb.setClassName(joinPoint.getTarget().getClass().getName());
@@ -84,6 +99,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             if (accessLog.enableRequest()) {
                 // 方法参数列表
                 Object[] args = joinPoint.getArgs();
+                // todo 不可序列化 或者 序列化后过大
                 alb.setParameters(JsonUtils.toJsonString(args));
             }
             alb.setStartTime(LocalDateTime.now());

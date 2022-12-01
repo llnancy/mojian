@@ -19,6 +19,10 @@ public @interface AccessLog {
 
     String value() default "";
 
+    boolean enableUserAgent() default true;
+
+    boolean enableRegion() default true;
+
     boolean enableRequest() default true;
 
     boolean enableResponse() default true;
