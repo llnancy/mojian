@@ -24,19 +24,35 @@ import java.util.Objects;
 @Slf4j
 public class Ip2regionUtils {
 
+    /**
+     * ip2region.xdb 文件位置
+     */
     private static final String IP2REGION_LOCATION = "ip2region/ip2region.xdb";
 
+    /**
+     * 内网 IP
+     */
     private static final String LOCALHOST_REGION = "内网IP";
 
+    /**
+     * 未知 IP
+     */
     private static final String UNKNOWN_REGION = "未知";
 
+    /**
+     * 查询器
+     */
     private static Searcher searcher;
 
     static {
-        initIp2region();
+        loadIp2regionXdb();
+        initSearcher();
     }
 
-    private static void initIp2region() {
+    /**
+     * 加载 ip2region.xdb 文件
+     */
+    private static void loadIp2regionXdb() {
         if (Objects.nonNull(searcher)) {
             return;
         }
@@ -51,11 +67,10 @@ public class Ip2regionUtils {
             Resource resource = resources[0];
             is = resource.getInputStream();
             File dest = new File(IP2REGION_LOCATION);
+            // 注意，使用者需要在 .gitignore 中忽略此处写入到项目下的 ip2region 文件夹
             FileUtils.copyInputStreamToFile(is, dest);
-            byte[] buf = Searcher.loadContentFromFile(IP2REGION_LOCATION);
-            searcher = Searcher.newWithBuffer(buf);
         } catch (IOException e) {
-            log.warn("init ip2region error", e);
+            log.warn("init ip2region.xdb error.", e);
         } finally {
             try {
                 if (Objects.nonNull(is)) {
@@ -64,6 +79,18 @@ public class Ip2regionUtils {
             } catch (IOException ignore) {
                 // ignore
             }
+        }
+    }
+
+    /**
+     * 初始化 {@link Searcher} 查询器
+     */
+    private static void initSearcher() {
+        try {
+            byte[] buf = Searcher.loadContentFromFile(IP2REGION_LOCATION);
+            searcher = Searcher.newWithBuffer(buf);
+        } catch (IOException e) {
+            log.warn("init ip2region's searcher error.", e);
         }
     }
 
@@ -78,11 +105,22 @@ public class Ip2regionUtils {
         return searcher.search(ip);
     }
 
+    /**
+     * 查询友好的地理位置
+     *
+     * @param ip ip address
+     * @return friendly region
+     */
     public static String searchFriendlyRegion(String ip) {
-        String region = searchRegion(ip);
-        return friendlyRegion(region);
+        return friendlyRegion(searchRegion(ip));
     }
 
+    /**
+     * 返回友好的地理位置
+     *
+     * @param region 源地理位置
+     * @return 友好的地理位置
+     */
     public static String friendlyRegion(String region) {
         if (region.contains(LOCALHOST_REGION)) {
             return LOCALHOST_REGION;
@@ -94,8 +132,16 @@ public class Ip2regionUtils {
         if (ArrayUtils.isEmpty(address)) {
             return UNKNOWN_REGION;
         }
-        if (address.length > 1) {
-            return buildAddress1(address).toString();
+        // 国内仅展示省份/地区
+        if (Objects.equals("中国", address[0])) {
+            if (address.length > 1) {
+                return address[1];
+            }
+        } else {
+            // 国外展示国家-省份/地区
+            if (address.length > 1) {
+                return buildAddress1(address).toString();
+            }
         }
         return buildAddress0(address).toString();
     }
@@ -111,9 +157,5 @@ public class Ip2regionUtils {
     @SneakyThrows
     public static void closeSearcher() {
         searcher.close();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(searchFriendlyRegion("127.0.0.1"));
     }
 }
