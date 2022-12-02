@@ -1,5 +1,7 @@
 package com.sunchaser.shushan.mojian.log.annotation;
 
+import com.sunchaser.shushan.mojian.log.enums.AccessType;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -18,6 +20,8 @@ import java.lang.annotation.Target;
 public @interface AccessLog {
 
     String value() default "";
+
+    AccessType type() default AccessType.OTHER;
 
     boolean enableUserAgent() default true;
 

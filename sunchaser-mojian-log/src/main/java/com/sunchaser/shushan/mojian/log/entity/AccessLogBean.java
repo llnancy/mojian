@@ -1,5 +1,7 @@
 package com.sunchaser.shushan.mojian.log.entity;
 
+import com.sunchaser.shushan.mojian.log.enums.AccessType;
+import com.sunchaser.shushan.mojian.log.enums.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +47,11 @@ public class AccessLogBean {
     private String requestIp;
 
     /**
+     * user agent
+     */
+    private String userAgent;
+
+    /**
      * device type
      */
     private String deviceType;
@@ -85,11 +92,6 @@ public class AccessLogBean {
     private String methodName;
 
     /**
-     * request status
-     */
-    private RequestStatus status;
-
-    /**
      * request parameters
      */
     private String parameters;
@@ -105,6 +107,21 @@ public class AccessLogBean {
     private String exception;
 
     /**
+     * description
+     */
+    private String description;
+
+    /**
+     * request status
+     */
+    private RequestStatus status;
+
+    /**
+     * access type
+     */
+    private AccessType accessType;
+
+    /**
      * start time
      */
     private LocalDateTime startTime;
@@ -118,15 +135,4 @@ public class AccessLogBean {
      * request time. unit: ms
      */
     private Long rt;
-
-    /**
-     * 请求状态枚举
-     */
-    public enum RequestStatus {
-
-        /**
-         * 请求状态
-         */
-        SUCCESS, EXCEPTION
-    }
 }

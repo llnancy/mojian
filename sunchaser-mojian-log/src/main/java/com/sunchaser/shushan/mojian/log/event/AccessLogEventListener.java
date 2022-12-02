@@ -7,7 +7,7 @@ import org.springframework.context.event.EventListener;
 import java.util.function.Consumer;
 
 /**
- * access log event listener
+ * {@link AccessLogEvent} listener
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/10/30
