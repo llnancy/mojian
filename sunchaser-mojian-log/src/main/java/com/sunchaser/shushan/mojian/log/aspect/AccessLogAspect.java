@@ -9,6 +9,7 @@ import com.sunchaser.shushan.mojian.base.util.ThrowableUtils;
 import com.sunchaser.shushan.mojian.log.annotation.AccessLog;
 import com.sunchaser.shushan.mojian.log.config.property.AccessLogProperties;
 import com.sunchaser.shushan.mojian.log.entity.AccessLogBean;
+import com.sunchaser.shushan.mojian.log.enums.AccessType;
 import com.sunchaser.shushan.mojian.log.enums.RequestStatus;
 import com.sunchaser.shushan.mojian.log.event.AccessLogEvent;
 import com.sunchaser.shushan.mojian.log.util.Ip2regionUtils;
@@ -79,16 +80,29 @@ public class AccessLogAspect implements ApplicationContextAware {
     public void withinPointcut() {
     }
 
-    @Pointcut("annotationPointcut() || withinPointcut()")
-    public void accessLogPointcut() {
-    }
-
     @Pointcut("!@annotation(com.sunchaser.shushan.mojian.log.annotation.LogIgnore)")
     public void logIgnorePointcut() {
     }
 
-    @Before("(accessLogPointcut() && logIgnorePointcut()) && (@annotation(accessLog) || @within(accessLog))")
-    public void before(JoinPoint joinPoint, AccessLog accessLog) {
+    @Pointcut("annotationPointcut() && logIgnorePointcut() && @annotation(accessLog)")
+    public void methodPointcut(AccessLog accessLog) {
+    }
+
+    @Pointcut("withinPointcut() && logIgnorePointcut() && @within(accessLog)")
+    public void classPointcut(AccessLog accessLog) {
+    }
+
+    @Before(value = "methodPointcut(accessLog)", argNames = "joinPoint,accessLog")
+    public void annotationBefore(JoinPoint joinPoint, AccessLog accessLog) {
+        doBefore(joinPoint, accessLog);
+    }
+
+    @Before(value = "classPointcut(accessLog)", argNames = "joinPoint,accessLog")
+    public void withinBefore(JoinPoint joinPoint, AccessLog accessLog) {
+        doBefore(joinPoint, accessLog);
+    }
+
+    private void doBefore(JoinPoint joinPoint, AccessLog accessLog) {
         try {
             ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = Objects.requireNonNull(sra).getRequest();
@@ -117,8 +131,9 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setMethodName(joinPoint.getSignature().getName());
             alb.setDescription(accessLog.value());
             alb.setStatus(RequestStatus.SUCCESS);
-            alb.setAccessType(accessLog.type());
-            if (accessLog.enableRequest()) {
+            AccessType accessType = accessLog.type();
+            alb.setAccessType(accessType);
+            if (accessLog.enableRequest() && accessType != AccessType.LOGIN) {
                 // 方法参数列表
                 Object[] args = joinPoint.getArgs();
                 // todo 不可序列化 或者 序列化后过大
@@ -134,14 +149,14 @@ public class AccessLogAspect implements ApplicationContextAware {
 
     /**
      * 注意点：一个 AOP 切面存在多个 @Before 方法时的执行顺序
-     * 需保证此方法在 before 方法之后执行
+     * 需保证此方法在 {@link AccessLogAspect#annotationBefore(JoinPoint, AccessLog)} 方法之后执行
      * <p>
      * 测试结果表明：存在多个 @Before 方法时，按方法名首字母从 a-z 顺序执行
      *
      * @param accessLog {@link AccessLog}
      */
-    @Before("(annotationPointcut() && logIgnorePointcut()) && @annotation(accessLog)")
-    public void beforeAnnotation(AccessLog accessLog) {
+    @Before("annotationPointcut() && logIgnorePointcut() && @annotation(accessLog)")
+    public void postProcessAfterAnnotationBefore(AccessLog accessLog) {
         try {
             AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
             // 用方法上的 AccessLog 注解覆盖类上的
@@ -154,11 +169,20 @@ public class AccessLogAspect implements ApplicationContextAware {
         }
     }
 
-    @AfterReturning(value = "(accessLogPointcut() && logIgnorePointcut()) && (@annotation(accessLog) || @within(accessLog))", returning = "result")
-    public void afterReturning(AccessLog accessLog, Object result) {
+    @AfterReturning(value = "methodPointcut(accessLog)", returning = "result", argNames = "accessLog,result")
+    public void annotationAfterReturning(AccessLog accessLog, Object result) {
+        doAfterReturning(accessLog, result);
+    }
+
+    @AfterReturning(value = "classPointcut(accessLog)", returning = "result", argNames = "accessLog,result")
+    public void withinAfterReturning(AccessLog accessLog, Object result) {
+        doAfterReturning(accessLog, result);
+    }
+
+    private void doAfterReturning(AccessLog accessLog, Object result) {
         try {
             AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
-            if (accessLog.enableResponse()) {
+            if (accessLog.enableResponse() && accessLog.type() != AccessType.LOGIN) {
                 alb.setResponse(JsonUtils.toJsonString(result));
             }
             publishEvent(alb, accessLog.enableRt());
@@ -168,8 +192,17 @@ public class AccessLogAspect implements ApplicationContextAware {
         }
     }
 
-    @AfterThrowing(value = "(accessLogPointcut() && logIgnorePointcut()) && (@annotation(accessLog) || @within(accessLog))", throwing = "t")
-    public void afterThrowing(AccessLog accessLog, Throwable t) {
+    @AfterThrowing(value = "methodPointcut(accessLog)", throwing = "t", argNames = "accessLog,t")
+    public void annotationAfterThrowing(AccessLog accessLog, Throwable t) {
+        doAfterThrowing(accessLog, t);
+    }
+
+    @AfterThrowing(value = "classPointcut(accessLog)", throwing = "t", argNames = "accessLog,t")
+    public void withinAfterThrowing(AccessLog accessLog, Throwable t) {
+        doAfterThrowing(accessLog, t);
+    }
+
+    public void doAfterThrowing(AccessLog accessLog, Throwable t) {
         try {
             AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
             alb.setStatus(RequestStatus.EXCEPTION);
