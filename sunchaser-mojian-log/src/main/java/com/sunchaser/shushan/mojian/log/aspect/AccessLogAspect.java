@@ -24,6 +24,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -34,8 +35,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
@@ -60,18 +63,11 @@ public class AccessLogAspect implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@Nonnull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
-    private static final ThreadLocal<AccessLogBean> LOG_BEAN_THREAD_LOCAL = ThreadLocal.withInitial(AccessLogBean::new);
-
-    /**
-     * annotation 方法拦截
-     */
-    @Pointcut("@annotation(com.sunchaser.shushan.mojian.log.annotation.AccessLog)")
-    public void annotationPointcut() {
-    }
+    private static final ThreadLocal<AccessLogAspectContext> ASPECT_CONTEXT_THREAD_LOCAL = ThreadLocal.withInitial(AccessLogAspectContext::new);
 
     /**
      * within 类拦截
@@ -80,45 +76,46 @@ public class AccessLogAspect implements ApplicationContextAware {
     public void withinPointcut() {
     }
 
+    /**
+     * annotation 方法拦截
+     */
+    @Pointcut("@annotation(com.sunchaser.shushan.mojian.log.annotation.AccessLog)")
+    public void annotationPointcut() {
+    }
+
+    @Pointcut("withinPointcut() || annotationPointcut()")
+    public void classOrMethodAccessLogPointcut() {
+    }
+
     @Pointcut("!@annotation(com.sunchaser.shushan.mojian.log.annotation.LogIgnore)")
     public void logIgnorePointcut() {
     }
 
-    @Pointcut("annotationPointcut() && logIgnorePointcut() && @annotation(accessLog)")
-    public void methodPointcut(AccessLog accessLog) {
+    @Pointcut("classOrMethodAccessLogPointcut() && logIgnorePointcut()")
+    public void accessLogPointcut() {
     }
 
-    @Pointcut("withinPointcut() && logIgnorePointcut() && @within(accessLog)")
-    public void classPointcut(AccessLog accessLog) {
-    }
-
-    @Before(value = "methodPointcut(accessLog)", argNames = "joinPoint,accessLog")
-    public void annotationBefore(JoinPoint joinPoint, AccessLog accessLog) {
-        doBefore(joinPoint, accessLog);
-    }
-
-    @Before(value = "classPointcut(accessLog)", argNames = "joinPoint,accessLog")
-    public void withinBefore(JoinPoint joinPoint, AccessLog accessLog) {
-        doBefore(joinPoint, accessLog);
-    }
-
-    private void doBefore(JoinPoint joinPoint, AccessLog accessLog) {
+    @Before(value = "accessLogPointcut()")
+    public void before(JoinPoint joinPoint) {
         try {
             ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = Objects.requireNonNull(sra).getRequest();
-            AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
+            AccessLogAspectContext context = ASPECT_CONTEXT_THREAD_LOCAL.get();
+            AccessLogBean alb = context.getAccessLogBean();
             String applicationName = applicationContext.getId();
             String activeProfiles = StringUtils.join(applicationContext.getEnvironment().getActiveProfiles(), ",");
             alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
             alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
+            Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+            Class<?> clazz = joinPoint.getTarget().getClass();
+            // 方法上的注解
+            AccessLog accessLog = method.getDeclaredAnnotation(AccessLog.class);
+            // 类上的注解
+            AccessLog classAccessLog = findClassAccessLog(clazz);
+            classAccessLog = Optionals.of(classAccessLog, accessLog);
+            accessLog = Optionals.of(accessLog, classAccessLog);
             if (accessLog.enableUserAgent()) {
-                String ua = request.getHeader(HttpHeaders.USER_AGENT);
-                alb.setUserAgent(ua);
-                UserAgent userAgent = UserAgent.parseUserAgentString(ua);
-                OperatingSystem os = userAgent.getOperatingSystem();
-                alb.setDeviceType(os.getDeviceType().getName());
-                alb.setOs(os.getName());
-                alb.setBrowser(userAgent.getBrowser().getName());
+                configureUserAgent(request, alb);
             }
             String clientIP = ServletUtil.getClientIP(request);
             alb.setRequestIp(clientIP);
@@ -127,9 +124,12 @@ public class AccessLogAspect implements ApplicationContextAware {
             }
             alb.setRequestUri(URLUtil.getPath(request.getRequestURI()));
             alb.setRequestMethod(request.getMethod());
-            alb.setClassName(joinPoint.getTarget().getClass().getName());
-            alb.setMethodName(joinPoint.getSignature().getName());
-            alb.setDescription(accessLog.value());
+            alb.setClassName(clazz.getName());
+            alb.setMethodName(method.getName());
+            // 方法上的注解优先级最高，其值如果存在，则覆盖类上的注解，否则使用注解的默认值。但是 value 字段除外。
+            // eg. 类上的注解指定 value = "类操作"，方法上的注解如果指定了 value = "方法操作"，则 value = "方法操作"；否则 value = "类操作"。
+            // 除 value 字段外，其它字段无法判定是显式声明了值还是使用了默认值。
+            alb.setDescription(StringUtils.getIfBlank(accessLog.value(), classAccessLog::value));
             alb.setStatus(RequestStatus.SUCCESS);
             AccessType accessType = accessLog.type();
             alb.setAccessType(accessType);
@@ -140,76 +140,65 @@ public class AccessLogAspect implements ApplicationContextAware {
                 alb.setParameters(formatParameters(args));
             }
             alb.setStartTime(LocalDateTime.now());
-            LOG_BEAN_THREAD_LOCAL.set(alb);
+            context.setAccessLog(accessLog);
+            ASPECT_CONTEXT_THREAD_LOCAL.set(context);
         } catch (Throwable t) {
-            LOG_BEAN_THREAD_LOCAL.remove();
+            ASPECT_CONTEXT_THREAD_LOCAL.remove();
             throw t;
         }
     }
 
-    /**
-     * 注意点：一个 AOP 切面存在多个 @Before 方法时的执行顺序
-     * 需保证此方法在 {@link AccessLogAspect#annotationBefore(JoinPoint, AccessLog)} 方法之后执行
-     * <p>
-     * 测试结果表明：存在多个 @Before 方法时，按方法名首字母从 a-z 顺序执行
-     *
-     * @param accessLog {@link AccessLog}
-     */
-    @Before("annotationPointcut() && logIgnorePointcut() && @annotation(accessLog)")
-    public void postProcessAfterAnnotationBefore(AccessLog accessLog) {
-        try {
-            AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
-            // 用方法上的 AccessLog 注解覆盖类上的
-            alb.setDescription(accessLog.value());
-            alb.setAccessType(accessLog.type());
-            LOG_BEAN_THREAD_LOCAL.set(alb);
-        } catch (Throwable t) {
-            LOG_BEAN_THREAD_LOCAL.remove();
-            throw t;
+    private static AccessLog findClassAccessLog(Class<?> clazz) {
+        AccessLog classAccessLog = clazz.getDeclaredAnnotation(AccessLog.class);
+        if (Objects.isNull(classAccessLog)) {
+            // 接口上的注解
+            for (Class<?> ci : clazz.getInterfaces()) {
+                classAccessLog = ci.getDeclaredAnnotation(AccessLog.class);
+                if (Objects.nonNull(classAccessLog)) {
+                    break;
+                }
+            }
         }
+        return classAccessLog;
     }
 
-    @AfterReturning(value = "methodPointcut(accessLog)", returning = "result", argNames = "accessLog,result")
-    public void annotationAfterReturning(AccessLog accessLog, Object result) {
-        doAfterReturning(accessLog, result);
+    private static void configureUserAgent(HttpServletRequest request, AccessLogBean alb) {
+        String ua = request.getHeader(HttpHeaders.USER_AGENT);
+        alb.setUserAgent(ua);
+        UserAgent userAgent = UserAgent.parseUserAgentString(ua);
+        OperatingSystem os = userAgent.getOperatingSystem();
+        alb.setDeviceType(os.getDeviceType().getName());
+        alb.setOs(os.getName());
+        alb.setBrowser(userAgent.getBrowser().getName());
     }
 
-    @AfterReturning(value = "classPointcut(accessLog)", returning = "result", argNames = "accessLog,result")
-    public void withinAfterReturning(AccessLog accessLog, Object result) {
-        doAfterReturning(accessLog, result);
-    }
-
-    private void doAfterReturning(AccessLog accessLog, Object result) {
+    @AfterReturning(value = "accessLogPointcut()", returning = "result")
+    public void afterReturning(Object result) {
         try {
-            AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
+            AccessLogAspectContext context = ASPECT_CONTEXT_THREAD_LOCAL.get();
+            AccessLogBean alb = context.getAccessLogBean();
+            AccessLog accessLog = context.getAccessLog();
             if (accessLog.enableResponse() && accessLog.type() != AccessType.LOGIN) {
                 alb.setResponse(JsonUtils.toJsonString(result));
             }
             publishEvent(alb, accessLog.enableRt());
         } catch (Throwable t) {
-            LOG_BEAN_THREAD_LOCAL.remove();
+            ASPECT_CONTEXT_THREAD_LOCAL.remove();
             throw t;
         }
     }
 
-    @AfterThrowing(value = "methodPointcut(accessLog)", throwing = "t", argNames = "accessLog,t")
-    public void annotationAfterThrowing(AccessLog accessLog, Throwable t) {
-        doAfterThrowing(accessLog, t);
-    }
-
-    @AfterThrowing(value = "classPointcut(accessLog)", throwing = "t", argNames = "accessLog,t")
-    public void withinAfterThrowing(AccessLog accessLog, Throwable t) {
-        doAfterThrowing(accessLog, t);
-    }
-
-    public void doAfterThrowing(AccessLog accessLog, Throwable t) {
+    @AfterThrowing(value = "accessLogPointcut()", throwing = "t")
+    public void afterThrowing(Throwable t) {
         try {
-            AccessLogBean alb = LOG_BEAN_THREAD_LOCAL.get();
+            AccessLogAspectContext context = ASPECT_CONTEXT_THREAD_LOCAL.get();
+            AccessLogBean alb = context.getAccessLogBean();
+            AccessLog accessLog = context.getAccessLog();
             alb.setStatus(RequestStatus.EXCEPTION);
             alb.setException(ThrowableUtils.printStackTrace(t));
             publishEvent(alb, accessLog.enableRt());
         } catch (Throwable th) {
-            LOG_BEAN_THREAD_LOCAL.remove();
+            ASPECT_CONTEXT_THREAD_LOCAL.remove();
             throw th;
         }
     }
@@ -221,7 +210,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setRt(alb.getStartTime().until(now, ChronoUnit.MILLIS));
         }
         applicationContext.publishEvent(new AccessLogEvent(alb));
-        LOG_BEAN_THREAD_LOCAL.remove();
+        ASPECT_CONTEXT_THREAD_LOCAL.remove();
     }
 
     /**
