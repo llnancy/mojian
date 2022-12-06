@@ -13,13 +13,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class AccessLogTest {
 
     @Autowired
-    private AccessLogService service;
+    private ClassAccessLogService classAccessLogService;
+
+    @Autowired
+    private MethodAccessLogService methodAccessLogService;
 
     @Test
-    public void test() {
-        String res = service.doLog("log");
-        String logMethod = service.logMethod("logMethod");
-        String ignore = service.ignore("ignore");
+    public void testClass() {
+        classAccessLogService.doLog("log");
+        classAccessLogService.logMethod("logMethod");
+        classAccessLogService.log();
+        classAccessLogService.ignore("ignore");
+    }
+
+    @Test
+    public void testMethod() {
+        methodAccessLogService.doLog("log");
+        methodAccessLogService.logMethod("logMethod");
+        methodAccessLogService.log();
+        methodAccessLogService.ignore("ignore");
     }
 
     @Test
