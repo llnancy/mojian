@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- ====================================================== -->
+    <!--                          父 POM                        -->
+    <!-- ====================================================== -->
+    <parent>
+        <groupId>io.github.llnancy</groupId>
+        <artifactId>mojian-parent</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- ====================================================== -->
+    <!--                         POM 版本                       -->
+    <!-- ====================================================== -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ====================================================== -->
+    <!--                         POM GAV                        -->
+    <!-- ====================================================== -->
+    <artifactId>mojian-all</artifactId>
+
+    <!-- ====================================================== -->
+    <!--                         POM 类型                       -->
+    <!-- ====================================================== -->
+    <packaging>pom</packaging>
+
+    <!-- ====================================================== -->
+    <!--                       项目名和组织                      -->
+    <!-- ====================================================== -->
+    <name>${project.artifactId}</name>
+    <description>========== mojian-all ==========</description>
+
+    <!-- ====================================================== -->
+    <!--                        开发者介绍                       -->
+    <!-- ====================================================== -->
+    <developers>
+        <developer>
+            <name>llnancy</name>
+            <email>admin@lilu.org.cn</email>
+            <url>https://lilu.org.cn</url>
+        </developer>
+    </developers>
+
+    <!-- ====================================================== -->
+    <!--                      组件依赖管理                        -->
+    <!-- ====================================================== -->
+    <dependencies>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-base</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-log</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+    </dependencies>
+</project>
