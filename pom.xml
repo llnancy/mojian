@@ -24,6 +24,16 @@
     <!-- ====================================================== -->
     <name>mojian</name>
     <description>魔剑 - 业务开发工具集</description>
+    <url>https://github.com/llnancy/mojian.git</url>
+
+    <!-- ====================================================== -->
+    <!--                         SCM 信息                       -->
+    <!-- ====================================================== -->
+    <scm>
+        <url>https://github.com/llnancy/mojian</url>
+        <connection>scm:git:https://github.com/llnancy/mojian.git</connection>
+        <developerConnection>scm:git:https://github.com/llnancy/mojian.git</developerConnection>
+    </scm>
 
     <!-- ====================================================== -->
     <!--                        开发者介绍                       -->
@@ -66,7 +76,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <revision>0.0.1-SNAPSHOT</revision>
+        <revision>0.0.1</revision>
         <mojian.version>${revision}</mojian.version>
         <springboot.version>2.7.6</springboot.version>
     </properties>
@@ -91,6 +101,19 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <!-- 快照版本 -->
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <!-- 正式版本 -->
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <!-- ====================================================== -->
     <!--               项目构建（包名/默认目标/插件等）             -->
     <!-- ====================================================== -->
@@ -98,7 +121,6 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
-                <!-- org.apache.maven.plugins/maven-compiler-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
@@ -108,8 +130,8 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <!-- 源码包插件 -->
             <plugin>
-                <!-- org.apache.maven.plugins/maven-source-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.1</version>
@@ -122,6 +144,50 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- javadoc 插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- GPG 签名插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <!-- id 与 setting.xml 的 gpg 配置中的 id 对应 -->
+                        <id>ossrh</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Nexus 部署插件 -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- 与 setting.xml 的 server 配置中的 ossrh 对应-->
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <!-- 单元测试插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -130,6 +196,7 @@
                     <skipTests>true</skipTests> <!-- 跳过单元测试 -->
                 </configuration>
             </plugin>
+            <!-- revision 版本号统一插件 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
