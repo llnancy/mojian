@@ -3,6 +3,8 @@ package io.github.llnancy.mojian.log.aspect;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.google.common.collect.Lists;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
 import io.github.llnancy.mojian.base.util.JsonUtils;
 import io.github.llnancy.mojian.base.util.Optionals;
 import io.github.llnancy.mojian.base.util.ThrowableUtils;
@@ -13,8 +15,6 @@ import io.github.llnancy.mojian.log.enums.AccessType;
 import io.github.llnancy.mojian.log.enums.RequestStatus;
 import io.github.llnancy.mojian.log.event.AccessLogEvent;
 import io.github.llnancy.mojian.log.util.Ip2regionUtils;
-import eu.bitwalker.useragentutils.OperatingSystem;
-import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +28,9 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
@@ -69,6 +72,8 @@ public class AccessLogAspect implements ApplicationContextAware {
 
     private static final ThreadLocal<AccessLogAspectContext> ASPECT_CONTEXT_THREAD_LOCAL = ThreadLocal.withInitial(AccessLogAspectContext::new);
 
+    private static final ExpressionParser EXPRESSION_PARSER = new SpelExpressionParser();
+
     /**
      * within 类拦截
      */
@@ -102,11 +107,11 @@ public class AccessLogAspect implements ApplicationContextAware {
             HttpServletRequest request = Objects.requireNonNull(sra).getRequest();
             AccessLogAspectContext context = ASPECT_CONTEXT_THREAD_LOCAL.get();
             AccessLogBean alb = context.getAccessLogBean();
-            String applicationName = applicationContext.getId();
-            String activeProfiles = StringUtils.join(applicationContext.getEnvironment().getActiveProfiles(), ",");
-            alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
-            alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
-            Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+            configureAppId(alb);
+            configureEnv(alb);
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+            // 目标方法
+            Method method = signature.getMethod();
             Class<?> clazz = joinPoint.getTarget().getClass();
             // 方法上的注解
             AccessLog accessLog = method.getDeclaredAnnotation(AccessLog.class);
@@ -126,16 +131,19 @@ public class AccessLogAspect implements ApplicationContextAware {
             alb.setRequestMethod(request.getMethod());
             alb.setClassName(clazz.getName());
             alb.setMethodName(method.getName());
+            // 方法参数名称列表
+            String[] parameterNames = signature.getParameterNames();
+            // 方法参数值列表
+            Object[] args = joinPoint.getArgs();
             // 方法上的注解优先级最高，其值如果存在，则覆盖类上的注解，否则使用注解的默认值。但是 value 字段除外。
             // eg. 类上的注解指定 value = "类操作"，方法上的注解如果指定了 value = "方法操作"，则 value = "方法操作"；否则 value = "类操作"。
             // 除 value 字段外，其它字段无法判定是显式声明了值还是使用了默认值。
-            alb.setDescription(StringUtils.getIfBlank(accessLog.value(), classAccessLog::value));
+            String value = StringUtils.getIfBlank(accessLog.value(), classAccessLog::value);
+            alb.setDescription(parseExpression(value, parameterNames, args));
             alb.setStatus(RequestStatus.SUCCESS);
             AccessType accessType = accessLog.type();
             alb.setAccessType(accessType);
             if (accessLog.enableRequest() && accessType != AccessType.LOGIN) {
-                // 方法参数列表
-                Object[] args = joinPoint.getArgs();
                 // todo 不可序列化 或者 序列化后过大
                 alb.setParameters(formatParameters(args));
             }
@@ -146,6 +154,24 @@ public class AccessLogAspect implements ApplicationContextAware {
             ASPECT_CONTEXT_THREAD_LOCAL.remove();
             throw t;
         }
+    }
+
+    private void configureEnv(AccessLogBean alb) {
+        String activeProfiles = StringUtils.join(applicationContext.getEnvironment().getActiveProfiles(), ",");
+        alb.setEnv(Optionals.of(accessLogProperties.getEnv(), Optionals.of(activeProfiles, DEFAULT_VALUE)));
+    }
+
+    private void configureAppId(AccessLogBean alb) {
+        String applicationName = applicationContext.getId();
+        alb.setAppId(Optionals.of(accessLogProperties.getAppId(), applicationName));
+    }
+
+    private String parseExpression(String value, String[] parameterNames, Object[] args) {
+        StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
+        for (int i = 0; i < args.length; i++) {
+            evaluationContext.setVariable(parameterNames[i], args[i]);
+        }
+        return EXPRESSION_PARSER.parseExpression(value).getValue(evaluationContext, String.class);
     }
 
     private static AccessLog findClassAccessLog(Class<?> clazz) {

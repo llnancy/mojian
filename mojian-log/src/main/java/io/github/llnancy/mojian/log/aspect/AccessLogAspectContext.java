@@ -16,7 +16,7 @@ public class AccessLogAspectContext {
     private AccessLogBean accessLogBean = new AccessLogBean();
 
     /**
-     * 方法上的注解，如果不存在，则为类上的注解。
+     * 默认为方法上的注解，如果不存在，则为类上的注解。
      */
     private AccessLog accessLog;
 }
