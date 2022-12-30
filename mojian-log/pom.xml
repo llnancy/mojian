@@ -77,6 +77,10 @@
             <artifactId>mojian-base</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-desensitize</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-extra</artifactId>
             <version>5.8.10</version>

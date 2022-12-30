@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static io.github.llnancy.mojian.log.test.ClassAccessLogService.LogRequest;
+
 /**
  * {@link io.github.llnancy.mojian.log.annotation.AccessLog} unit test
  *
@@ -26,6 +28,10 @@ public class AccessLogTest {
         classAccessLogService.logMethod("logMethod");
         classAccessLogService.log();
         classAccessLogService.ignore("ignore");
+        LogRequest request = new LogRequest();
+        request.setUsername("llnancy");
+        request.setPassword("123456");
+        classAccessLogService.log(request);
     }
 
     @Test

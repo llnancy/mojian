@@ -23,7 +23,7 @@ public @interface AccessLog {
      * 日志文本内容
      *
      * @return 日志文本
-     * @since 0.0.2 支持 SpEL 表达式
+     * @since 0.0.2 修饰在方法上时支持 SpEL 表达式
      */
     String value() default "";
 
