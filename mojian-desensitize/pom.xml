@@ -7,8 +7,9 @@
     <!-- ====================================================== -->
     <parent>
         <groupId>io.github.llnancy</groupId>
-        <artifactId>mojian-parent</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <artifactId>mojian-bom</artifactId>
+        <version>${revision}</version>
+        <relativePath>../mojian-bom</relativePath>
     </parent>
 
     <!-- ====================================================== -->
@@ -64,6 +65,10 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
 </project>

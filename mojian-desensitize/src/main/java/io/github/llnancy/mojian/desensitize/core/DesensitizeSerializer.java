@@ -1,4 +1,4 @@
-package io.github.llnancy.mojian.desensitize.adapter.jackson;
+package io.github.llnancy.mojian.desensitize.core;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
