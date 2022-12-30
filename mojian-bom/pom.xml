@@ -63,6 +63,11 @@
                 <artifactId>mojian-web</artifactId>
                 <version>${mojian.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.llnancy</groupId>
+                <artifactId>mojian-desensitize</artifactId>
+                <version>${mojian.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
