@@ -46,7 +46,7 @@ public class JsonUtils {
         withoutNull(commonInit(WITHOUT_NULL_MAPPER));
     }
 
-    private static ObjectMapper commonInit(ObjectMapper objectMapper) {
+    public static ObjectMapper commonInit(ObjectMapper objectMapper) {
         // 忽略空 bean 转对象异常
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         // 忽略在 json 字符串中存在，但是在 Java 类中不存在对应属性时抛出的异常
@@ -73,11 +73,11 @@ public class JsonUtils {
         return new ObjectMapper();
     }
 
-    private static void withShakeCase(ObjectMapper objectMapper) {
+    public static void withShakeCase(ObjectMapper objectMapper) {
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
     }
 
-    private static void withoutNull(ObjectMapper objectMapper) {
+    public static void withoutNull(ObjectMapper objectMapper) {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
@@ -162,7 +162,7 @@ public class JsonUtils {
         return doToJsonString(object, COMMON_MAPPER);
     }
 
-    private static String doToJsonString(Object object, ObjectMapper objectMapper) {
+    public static String doToJsonString(Object object, ObjectMapper objectMapper) {
         if (Objects.isNull(object)) {
             return StringUtils.EMPTY;
         }
