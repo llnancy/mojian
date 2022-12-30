@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
-import io.github.llnancy.mojian.desensitize.adapter.jackson.DesensitizeAnnotationIntrospector;
+import io.github.llnancy.mojian.desensitize.core.DesensitizeAnnotationIntrospector;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
+ * jackson test
+ *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/12/23
  */

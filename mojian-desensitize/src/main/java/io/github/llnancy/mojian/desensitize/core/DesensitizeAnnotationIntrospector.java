@@ -1,4 +1,4 @@
-package io.github.llnancy.mojian.desensitize.adapter.jackson;
+package io.github.llnancy.mojian.desensitize.core;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
