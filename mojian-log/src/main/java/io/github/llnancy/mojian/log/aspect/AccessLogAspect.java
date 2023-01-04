@@ -286,6 +286,10 @@ public class AccessLogAspect implements ApplicationContextAware {
         if (CollectionUtils.isEmpty(parameters)) {
             return StringUtils.EMPTY;
         }
+        if (parameters.size() == 1) {
+            Object obj = parameters.get(0);
+            return JsonUtils.doToJsonString(obj, OBJECT_MAPPER);
+        }
         return JsonUtils.doToJsonString(parameters, OBJECT_MAPPER);
     }
 
