@@ -44,10 +44,18 @@ public class AccessLogTest {
 
     @Test
     public void testIp2region() {
-        // 国内 IP
-        String ip = "183.136.182.140";
+        // 本地内网 ip
+        // String ip = "0:0:0:0:0:0:0:1";
+        String ip = "127.0.0.1";
         String region = Ip2regionUtils.searchRegion(ip);
         String friendlyRegion = Ip2regionUtils.searchFriendlyRegion(ip);
+        System.out.println(region);
+        System.out.println(friendlyRegion);
+
+        // 国内 IP
+        ip = "183.136.182.140";
+        region = Ip2regionUtils.searchRegion(ip);
+        friendlyRegion = Ip2regionUtils.searchFriendlyRegion(ip);
         System.out.println(region);
         System.out.println(friendlyRegion);
 
