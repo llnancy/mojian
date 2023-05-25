@@ -21,8 +21,14 @@ public class IResponse implements Response {
 
     private static final long serialVersionUID = -804559387002430359L;
 
+    /**
+     * 业务状态码
+     */
     private Integer code;
 
+    /**
+     * 响应消息
+     */
     private String msg;
 
     public static final IResponse SUCCESS = ResponseEnum.SUCCESS.toResponse();

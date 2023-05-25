@@ -19,6 +19,9 @@ public class MultiResponse<T> extends IResponse {
 
     private static final long serialVersionUID = 556787308052679453L;
 
+    /**
+     * 数据域
+     */
     private Collection<T> data;
 
     public MultiResponse() {

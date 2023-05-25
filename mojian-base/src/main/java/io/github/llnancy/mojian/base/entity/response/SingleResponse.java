@@ -17,6 +17,9 @@ public class SingleResponse<T> extends IResponse {
 
     private static final long serialVersionUID = -6629737337259306630L;
 
+    /**
+     * 数据域
+     */
     private T data;
 
     public SingleResponse() {

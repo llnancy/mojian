@@ -24,8 +24,14 @@ public class MultiPageResponse<T> extends MultiResponse<T> {
 
     private static final long serialVersionUID = 5074494799013392843L;
 
+    /**
+     * 总记录数
+     */
     private Long count = 0L;
 
+    /**
+     * 是否有下一页
+     */
     private Boolean hasNext = Boolean.TRUE;
 
     public MultiPageResponse() {

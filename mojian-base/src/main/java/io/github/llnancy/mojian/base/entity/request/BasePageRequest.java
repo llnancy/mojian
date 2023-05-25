@@ -15,7 +15,13 @@ public class BasePageRequest extends BaseRequest {
 
     private static final long serialVersionUID = -7698513373426563684L;
 
+    /**
+     * 当前页码
+     */
     private Integer pageNo = 1;
 
+    /**
+     * 每页大小
+     */
     private Integer pageSize = 20;
 }

@@ -4,8 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 /**
  * 单对象分页响应
  *
@@ -19,11 +17,23 @@ public class SinglePageResponse<T> extends SingleResponse<T> {
 
     private static final long serialVersionUID = 6047231376898018281L;
 
+    /**
+     * 总记录数
+     */
     private Long count = 0L;
 
+    /**
+     * 是否有下一页
+     */
     private Boolean hasNext = Boolean.TRUE;
 
     public SinglePageResponse() {
+    }
+
+    public SinglePageResponse(Integer code, String msg, Long count, Boolean hasNext) {
+        super(code, msg);
+        this.count = count;
+        this.hasNext = hasNext;
     }
 
     public SinglePageResponse(Integer code, String msg, T data, Long count, Boolean hasNext) {
@@ -32,15 +42,27 @@ public class SinglePageResponse<T> extends SingleResponse<T> {
         this.hasNext = hasNext;
     }
 
-    public static <T extends Serializable> SinglePageResponse<T> success(T t, Long count, Boolean hasNext) {
+    public static <T> SinglePageResponse<T> success(T t, Long count, Boolean hasNext) {
         return success(SUCCESS, t, count, hasNext);
     }
 
-    public static <T extends Serializable> SinglePageResponse<T> success(IResponse resp, T t, Long count, Boolean hasNext) {
+    public static <T> SinglePageResponse<T> success(IResponse resp, T t, Long count, Boolean hasNext) {
         return success(resp.getCode(), resp.getMsg(), t, count, hasNext);
     }
 
-    public static <T extends Serializable> SinglePageResponse<T> success(Integer code, String msg, T t, Long count, Boolean hasNext) {
+    public static <T> SinglePageResponse<T> success(Integer code, String msg, T t, Long count, Boolean hasNext) {
         return new SinglePageResponse<>(code, msg, t, count, hasNext);
+    }
+
+    public static <T> SinglePageResponse<T> failure() {
+        return failure(FAILURE);
+    }
+
+    public static <T> SinglePageResponse<T> failure(IResponse resp) {
+        return new SinglePageResponse<>(resp.getCode(), resp.getMsg(), 0L, Boolean.FALSE);
+    }
+
+    public static <T> SinglePageResponse<T> empty() {
+        return success(SUCCESS, null, 0L, Boolean.FALSE);
     }
 }
