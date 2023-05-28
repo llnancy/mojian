@@ -1,5 +1,6 @@
 package io.github.llnancy.mojian.base.entity.request;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,4 +25,14 @@ public class BasePageRequest extends BaseRequest {
      * 每页大小
      */
     private Integer pageSize = 20;
+
+    /**
+     * 获取 MyBatis-Plus 的 {@link Page} 对象
+     *
+     * @param <T> record type
+     * @return {@link Page}
+     */
+    public <T> Page<T> getMpPage() {
+        return Page.of(this.pageNo, this.pageSize);
+    }
 }
