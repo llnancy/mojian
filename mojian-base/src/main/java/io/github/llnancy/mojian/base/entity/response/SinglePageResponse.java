@@ -65,4 +65,8 @@ public class SinglePageResponse<T> extends SingleResponse<T> {
     public static <T> SinglePageResponse<T> empty() {
         return success(SUCCESS, null, 0L, Boolean.FALSE);
     }
+
+    public static <T> SinglePageResponse<T> empty(T t) {
+        return success(SUCCESS, t, 0L, Boolean.FALSE);
+    }
 }
