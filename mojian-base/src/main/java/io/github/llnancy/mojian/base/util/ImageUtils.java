@@ -4,7 +4,9 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 /**
  * image util
@@ -17,16 +19,19 @@ public class ImageUtils {
     private ImageUtils() {
     }
 
-    public static ImmutablePair<Integer, Integer> getImageHeightAndWidth(InputStream is) throws Exception {
+    public static ImmutablePair<Integer, Integer> getImageHeightAndWidth(File file) throws Exception {
+        InputStream is = Files.newInputStream(file.toPath());
         BufferedImage bufferedImage = doGetBufferedImage(is);
         return ImmutablePair.of(bufferedImage.getHeight(), bufferedImage.getWidth());
     }
 
-    public static Integer getImageHeight(InputStream is) throws Exception {
+    public static Integer getImageHeight(File file) throws Exception {
+        InputStream is = Files.newInputStream(file.toPath());
         return doGetBufferedImage(is).getHeight();
     }
 
-    public static Integer getImageWidth(InputStream is) throws Exception {
+    public static Integer getImageWidth(File file) throws Exception {
+        InputStream is = Files.newInputStream(file.toPath());
         return doGetBufferedImage(is).getWidth();
     }
 
