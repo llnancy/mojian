@@ -31,7 +31,9 @@
     <!--                       项目名和组织                      -->
     <!-- ====================================================== -->
     <name>${project.artifactId}</name>
-    <description>魔剑 - 业务开发工具集：web 模块，提供 Web 开发常用功能，包含全局异常处理器、Jackson 日期格式化配置、JSR303 分组校验接口及快速失败配置等。</description>
+    <description>魔剑 - 业务开发工具集：web 模块，提供 Web 开发常用功能，包含全局异常处理器、Jackson 日期格式化配置、JSR303
+        分组校验接口及快速失败配置等。
+    </description>
 
     <!-- ====================================================== -->
     <!--                        开发者介绍                       -->
@@ -47,6 +49,10 @@
     <!-- ====================================================== -->
     <!--                      组件依赖管理                        -->
     <!-- ====================================================== -->
+    <properties>
+        <jjwt.version>0.11.5</jjwt.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.github.llnancy</groupId>
@@ -65,6 +71,31 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- IDE 中自动提示自定义配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- io.jsonwebtoken/jjwt-api -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <!-- io.jsonwebtoken/jjwt-impl -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <!-- io.jsonwebtoken/jjwt-jackson -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>
