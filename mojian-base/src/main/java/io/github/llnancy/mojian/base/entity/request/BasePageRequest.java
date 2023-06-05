@@ -35,4 +35,13 @@ public class BasePageRequest extends BaseRequest {
     public <T> Page<T> getMpPage() {
         return Page.of(this.pageNo, this.pageSize);
     }
+
+    /**
+     * 计算偏移量
+     *
+     * @return offset
+     */
+    public Integer getOffset() {
+        return (this.pageNo - 1) * pageSize;
+    }
 }
