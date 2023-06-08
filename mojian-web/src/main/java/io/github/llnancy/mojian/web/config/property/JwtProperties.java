@@ -18,9 +18,9 @@ public class JwtProperties {
     public static final String MOJIAN_JWT = "mojian.jwt";
 
     /**
-     * jwt 过期时间
+     * jwt 过期时间，单位毫秒
      */
-    private Long expiration = 24 * 60 * 3600L;
+    private Long expiration = 24 * 60 * 3600 * 1000L;
 
     /**
      * jwt 签名类型
