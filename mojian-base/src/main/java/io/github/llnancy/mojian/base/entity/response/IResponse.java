@@ -37,12 +37,24 @@ public class IResponse implements Response {
 
     public static final IResponse FAILURE = ResponseEnum.FAILURE.toResponse();
 
+    public static IResponse of(Response res) {
+        return res.toResponse();
+    }
+
     public static IResponse ofSuccess() {
         return SUCCESS;
     }
 
+    public static IResponse ofSuccess(Response res) {
+        return of(res);
+    }
+
     public static IResponse ofFailure() {
         return FAILURE;
+    }
+
+    public static IResponse ofFailure(Response res) {
+        return of(res);
     }
 
     public static IResponse ofFailure(Integer code, String msg) {
