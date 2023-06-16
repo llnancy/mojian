@@ -3,8 +3,6 @@ package io.github.llnancy.mojian.desensitize.strategy.impl;
 import io.github.llnancy.mojian.desensitize.strategy.DesensitizeStrategy;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nonnull;
-
 /**
  * abstract implementation of desensitize strategy
  *
@@ -21,5 +19,5 @@ public abstract class AbstractDesensitizeStrategy implements DesensitizeStrategy
         return DesensitizeStrategy.super.desensitize(source, placeholder);
     }
 
-    protected abstract String doDesensitize(@Nonnull String source, @Nonnull String placeholder);
+    protected abstract String doDesensitize(String source, String placeholder);
 }

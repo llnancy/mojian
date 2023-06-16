@@ -1,7 +1,5 @@
 package io.github.llnancy.mojian.desensitize.strategy.impl;
 
-import javax.annotation.Nonnull;
-
 /**
  * chinese name desensitize strategy.
  * display only the first Chinese character.
@@ -12,7 +10,7 @@ import javax.annotation.Nonnull;
 public class ChineseNameDesensitizeStrategy extends AbstractHeadTailDesensitizeStrategy {
 
     @Override
-    protected int repeatLength(@Nonnull String source) {
+    protected int repeatLength(String source) {
         return 2;
     }
 
