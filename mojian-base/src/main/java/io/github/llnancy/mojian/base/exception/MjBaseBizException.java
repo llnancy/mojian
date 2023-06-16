@@ -1,6 +1,6 @@
 package io.github.llnancy.mojian.base.exception;
 
-import cn.hutool.core.text.StrFormatter;
+import cn.hutool.core.util.StrUtil;
 import io.github.llnancy.mojian.base.entity.response.Response;
 
 /**
@@ -25,21 +25,21 @@ public class MjBaseBizException extends RuntimeException {
      * @param args     占位符参数
      */
     public MjBaseBizException(Response response, Object... args) {
-        super(StrFormatter.format(response.getMsg(), args));
+        super(StrUtil.format(response.getMsg(), args));
         this.code = response.getCode();
     }
 
     public MjBaseBizException(Integer code, String message, Object... args) {
-        super(StrFormatter.format(message, args));
+        super(StrUtil.format(message, args));
         this.code = code;
     }
 
     public MjBaseBizException(String message, Object... args) {
-        super(StrFormatter.format(message, args));
+        super(StrUtil.format(message, args));
     }
 
     public MjBaseBizException(String message, Throwable cause, Object... args) {
-        super(StrFormatter.format(message, args), cause);
+        super(StrUtil.format(message, args), cause);
     }
 
     public MjBaseBizException(Throwable cause) {

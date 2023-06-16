@@ -28,6 +28,10 @@ public class Optionals {
         return of(l, 0L);
     }
 
+    public static Double of(Double d) {
+        return of(d, 0.0);
+    }
+
     public static String of(String str) {
         return of(str, "");
     }

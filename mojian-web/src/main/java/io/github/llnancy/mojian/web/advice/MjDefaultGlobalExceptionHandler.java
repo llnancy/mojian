@@ -44,7 +44,7 @@ public class MjDefaultGlobalExceptionHandler {
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleBindException(BindException be) {
-        log.error("", be);
+        log.error("MjDefaultGlobalExceptionHandler#handleBindException", be);
         return IResponse.ofFailure(
                 ResponseEnum.INVALID_PARAM.getCode(),
                 be.getBindingResult()
@@ -59,7 +59,7 @@ public class MjDefaultGlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleConstraintViolationException(ConstraintViolationException cve) {
-        log.error("", cve);
+        log.error("MjDefaultGlobalExceptionHandler#handleConstraintViolationException", cve);
         return IResponse.ofFailure(
                 ResponseEnum.INVALID_PARAM.getCode(),
                 cve.getConstraintViolations()
@@ -87,7 +87,7 @@ public class MjDefaultGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handle4xxClientError(Exception ex) {
-        log.error("", ex);
+        log.error("MjDefaultGlobalExceptionHandler#handle4xxClientError", ex);
         return IResponse.ofFailure(ResponseEnum.INVALID_PARAM.getCode(), ex.getMessage());
     }
 
@@ -98,7 +98,7 @@ public class MjDefaultGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public IResponse handle5xxServerError(Exception ex) {
-        log.error("", ex);
+        log.error("MjDefaultGlobalExceptionHandler#handle5xxServerError", ex);
         return IResponse.ofFailure(ResponseEnum.FAILURE.getCode(), ex.getMessage());
     }
 }

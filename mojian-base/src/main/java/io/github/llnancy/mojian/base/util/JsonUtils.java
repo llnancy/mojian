@@ -37,7 +37,9 @@ import java.util.Set;
 public class JsonUtils {
 
     private static final ObjectMapper COMMON_MAPPER = createObjectMapper();
+
     private static final ObjectMapper WITH_SHAKE_CASE_MAPPER = createObjectMapper();
+
     private static final ObjectMapper WITHOUT_NULL_MAPPER = createObjectMapper();
 
     static {
@@ -189,6 +191,7 @@ public class JsonUtils {
     }
 
     public static class JsonException extends RuntimeException {
+
         private static final long serialVersionUID = 530060844406057111L;
 
         public JsonException(Throwable cause) {

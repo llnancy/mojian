@@ -3,12 +3,12 @@ package io.github.llnancy.mojian.log.aspect;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.github.llnancy.mojian.base.util.JsonUtils;
 import io.github.llnancy.mojian.base.util.Optionals;
-import io.github.llnancy.mojian.base.util.ThrowableUtils;
 import io.github.llnancy.mojian.desensitize.support.DesensitizeConfiguration;
 import io.github.llnancy.mojian.log.annotation.AccessLog;
 import io.github.llnancy.mojian.log.config.property.AccessLogProperties;
@@ -245,7 +245,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             AccessLogBean alb = context.getAccessLogBean();
             boolean enableRt = context.enableRt();
             alb.setStatus(RequestStatus.EXCEPTION);
-            alb.setException(ThrowableUtils.printStackTrace(t));
+            alb.setException(Throwables.getStackTraceAsString(t));
             publishEvent(alb, enableRt);
         } catch (Throwable th) {
             ASPECT_CONTEXT_THREAD_LOCAL.remove();

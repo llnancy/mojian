@@ -1,6 +1,6 @@
-package io.github.llnancy.mojian.desensitize.annotation;
+package io.github.llnancy.mojian.log.annotation;
 
-import io.github.llnancy.mojian.desensitize.support.DesensitizeConfiguration;
+import io.github.llnancy.mojian.log.config.AccessLogAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -10,14 +10,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Enable @Desensitize
+ * Enable @AccessLog
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/28
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK8 2023/6/15
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(DesensitizeConfiguration.class)
-public @interface EnableDesensitize {
+@Import(AccessLogAutoConfiguration.class)
+public @interface EnableMjLog {
 }

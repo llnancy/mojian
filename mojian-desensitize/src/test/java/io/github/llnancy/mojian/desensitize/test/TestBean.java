@@ -12,6 +12,8 @@ import io.github.llnancy.mojian.desensitize.strategy.impl.PasswordDesensitizeStr
 import lombok.Data;
 
 /**
+ * test bean
+ *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2022/12/23
  */

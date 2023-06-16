@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 public class JwtProviderAutoConfiguration {
 
     /**
-     * zyj.jwt.sign-type 中只能用短横线，不能用驼峰
+     * mojian.jwt.sign-type 中只能用短横线，不能用驼峰
      */
     public static final String JWT_SIGN_TYPE = JwtProperties.MOJIAN_JWT + ".sign-type";
 

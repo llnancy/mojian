@@ -3,7 +3,7 @@ package io.github.llnancy.mojian.base.entity.response;
 import java.io.Serializable;
 
 /**
- * API响应
+ * API 响应
  *
  * @author sunchaser admin@lilu.org.cn
  * @since JDK8 2021/10/18

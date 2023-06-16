@@ -1,7 +1,6 @@
 package io.github.llnancy.mojian.base.util;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.springframework.util.InvalidMimeTypeException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
