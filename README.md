@@ -20,6 +20,11 @@
 
 # 组件列表
 
-- `mojian-base`: 提供 `RESTFul` 接口统一响应体、常用业务状态码枚举及常用工具类等。
-- `mojian-web`: 提供 `Web` 开发常用功能，包含全局异常处理器、`Jackson` 日期格式化配置、`JSR303` 分组校验接口及快速失败配置等。
+- `mojian-base`：提供 `RESTFul` 接口统一请求与响应体、常用业务状态码枚举及常用工具类等。
+- `mojian-web`：提供 `Web` 开发常用功能，包含全局异常处理器、`Jackson` 日期格式化配置、`JSR303` 分组校验接口及快速失败配置等。
 - `mojian-log`: 基于 `Spring AOP` 和注解实现的日志记录组件。
+- `mojian-desensitize`：基于 `Jackson` 和注解实现的接口数据脱敏工具。
+
+# 在线文档
+
+[https://lilu.org.cn/open-source/mojian/](https://lilu.org.cn/open-source/mojian/)

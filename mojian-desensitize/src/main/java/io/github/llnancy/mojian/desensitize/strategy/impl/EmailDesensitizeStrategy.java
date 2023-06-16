@@ -2,8 +2,6 @@ package io.github.llnancy.mojian.desensitize.strategy.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nonnull;
-
 /**
  * email desensitize strategy.
  * only the first letter of the mailbox prefix is displayed, the others are hidden,
@@ -21,7 +19,7 @@ public class EmailDesensitizeStrategy extends AbstractHeadTailDesensitizeStrateg
     }
 
     @Override
-    protected int tailLength(@Nonnull String source) {
+    protected int tailLength(String source) {
         return StringUtils.length(source) - StringUtils.indexOf(source, "@");
     }
 }

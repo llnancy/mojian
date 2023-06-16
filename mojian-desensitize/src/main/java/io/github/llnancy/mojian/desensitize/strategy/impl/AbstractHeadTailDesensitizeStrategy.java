@@ -2,8 +2,6 @@ package io.github.llnancy.mojian.desensitize.strategy.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nonnull;
-
 /**
  * abstract implementation of desensitize strategy based on head-tail mode.
  *
@@ -13,7 +11,7 @@ import javax.annotation.Nonnull;
 public abstract class AbstractHeadTailDesensitizeStrategy extends AbstractDesensitizeStrategy {
 
     @Override
-    protected String doDesensitize(@Nonnull String source, @Nonnull String placeholder) {
+    protected String doDesensitize(String source, String placeholder) {
         int head = headLength(source);
         int tail = tailLength(source);
         String left = StringUtils.left(source, head);
@@ -22,11 +20,11 @@ public abstract class AbstractHeadTailDesensitizeStrategy extends AbstractDesens
         return left.concat(repeat).concat(right);
     }
 
-    protected int repeatLength(@Nonnull String source) {
+    protected int repeatLength(String source) {
         return StringUtils.length(source) - headLength(source) - tailLength(source);
     }
 
-    protected int headLength(@Nonnull String source) {
+    protected int headLength(String source) {
         return headLength();
     }
 
@@ -34,7 +32,7 @@ public abstract class AbstractHeadTailDesensitizeStrategy extends AbstractDesens
         return 0;
     }
 
-    protected int tailLength(@Nonnull String source) {
+    protected int tailLength(String source) {
         return tailLength();
     }
 

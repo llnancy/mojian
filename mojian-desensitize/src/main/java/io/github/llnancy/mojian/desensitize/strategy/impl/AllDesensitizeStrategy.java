@@ -1,7 +1,5 @@
 package io.github.llnancy.mojian.desensitize.strategy.impl;
 
-import javax.annotation.Nonnull;
-
 /**
  * all desensitize strategy
  *
@@ -11,7 +9,7 @@ import javax.annotation.Nonnull;
 public class AllDesensitizeStrategy extends AbstractHeadTailDesensitizeStrategy {
 
     @Override
-    protected int repeatLength(@Nonnull String source) {
+    protected int repeatLength(String source) {
         return super.repeatLength(source);
     }
 

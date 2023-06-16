@@ -77,9 +77,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <revision>0.0.2</revision>
+        <revision>0.0.3-SNAPSHOT</revision>
         <mojian.version>${revision}</mojian.version>
-        <springboot.version>2.7.6</springboot.version>
+        <springboot.version>2.7.12</springboot.version>
     </properties>
 
     <dependencyManagement>
