@@ -75,6 +75,10 @@ public class JsonUtils {
         return new ObjectMapper();
     }
 
+    public static ObjectMapper getCommonMapper() {
+        return COMMON_MAPPER;
+    }
+
     public static void withShakeCase(ObjectMapper objectMapper) {
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
     }
