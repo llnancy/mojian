@@ -4,8 +4,8 @@ package io.github.llnancy.mojian.desensitize.strategy.impl;
  * mobile desensitize strategy.
  * only the first three and last four digits are displayed.
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class MobileDesensitizeStrategy extends AbstractHeadTailDesensitizeStrategy {
 

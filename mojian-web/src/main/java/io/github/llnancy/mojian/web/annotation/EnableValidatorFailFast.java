@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 /**
  * enable validator fail-fast
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/10/29
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

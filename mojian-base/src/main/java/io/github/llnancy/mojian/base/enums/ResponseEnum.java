@@ -7,8 +7,8 @@ import lombok.Getter;
 /**
  * code/msg enum
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/10/29
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @AllArgsConstructor
 @Getter

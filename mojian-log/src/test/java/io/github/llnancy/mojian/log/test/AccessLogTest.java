@@ -10,8 +10,8 @@ import static io.github.llnancy.mojian.log.test.ClassAccessLogService.LogRequest
 /**
  * {@link io.github.llnancy.mojian.log.annotation.AccessLog} unit test
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/29
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @SpringBootTest
 public class AccessLogTest {

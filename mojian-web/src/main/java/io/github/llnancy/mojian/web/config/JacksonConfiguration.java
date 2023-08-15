@@ -17,8 +17,8 @@ import java.time.LocalTime;
 /**
  * Jackson config
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/3/18
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class JacksonConfiguration {
 

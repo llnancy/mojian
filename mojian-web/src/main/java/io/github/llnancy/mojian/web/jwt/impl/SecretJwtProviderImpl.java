@@ -12,8 +12,8 @@ import java.security.Key;
 /**
  * jwt implementation based on secret encryption
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/3
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class SecretJwtProviderImpl extends AbstractJwtProvider {
 

@@ -16,7 +16,7 @@ import java.security.PublicKey;
  * jwt helper
  *
  * @author llnancy admin@lilu.org.cn
- * @since JDK8 2023/6/6
+ * @since JDK17 2023/07/10
  */
 public class JwtHelper {
 

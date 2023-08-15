@@ -8,8 +8,8 @@ import org.apache.commons.lang3.StringUtils;
  * and the characters after the @ symbol are displayed in full.
  * eg. a****@lilu.org.cn
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class EmailDesensitizeStrategy extends AbstractHeadTailDesensitizeStrategy {
 

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -14,14 +15,15 @@ import java.util.stream.Collectors;
 /**
  * 多对象分页响应
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/10/24
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString(callSuper = true)
 public class MultiPageResponse<T> extends MultiResponse<T> {
 
+    @Serial
     private static final long serialVersionUID = 5074494799013392843L;
 
     /**

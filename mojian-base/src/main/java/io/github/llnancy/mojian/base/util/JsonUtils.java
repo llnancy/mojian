@@ -31,8 +31,8 @@ import java.util.Set;
 /**
  * Json工具类
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/3/13
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class JsonUtils {
 

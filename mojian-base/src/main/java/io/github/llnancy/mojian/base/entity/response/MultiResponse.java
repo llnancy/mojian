@@ -4,19 +4,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.util.Collection;
 
 /**
  * 多对象响应
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/10/24
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString(callSuper = true)
 public class MultiResponse<T> extends IResponse {
 
+    @Serial
     private static final long serialVersionUID = 556787308052679453L;
 
     /**

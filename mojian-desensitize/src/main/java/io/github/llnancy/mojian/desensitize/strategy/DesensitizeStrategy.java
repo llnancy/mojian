@@ -3,8 +3,8 @@ package io.github.llnancy.mojian.desensitize.strategy;
 /**
  * desensitize strategy
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/16
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public interface DesensitizeStrategy {
 

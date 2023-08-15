@@ -5,8 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * abstract implementation of desensitize strategy based on head-tail mode.
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public abstract class AbstractHeadTailDesensitizeStrategy extends AbstractDesensitizeStrategy {
 

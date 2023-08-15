@@ -5,8 +5,8 @@ package io.github.llnancy.mojian.desensitize.strategy.impl;
  * only the first six characters are displayed, usually the name of the province and city.
  * eg. 浙江省杭州市****
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class AddressDesensitizeStrategy extends AbstractHeadTailDesensitizeStrategy {
 

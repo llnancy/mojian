@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 /**
  * log ignore
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/30
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

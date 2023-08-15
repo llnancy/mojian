@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 /**
  * {@link AccessLogEvent} async listener
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/2
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class AccessLogAsyncEventListener extends AccessLogEventListener {
 

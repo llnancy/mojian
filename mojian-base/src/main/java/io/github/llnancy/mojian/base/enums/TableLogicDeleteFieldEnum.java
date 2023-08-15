@@ -3,8 +3,8 @@ package io.github.llnancy.mojian.base.enums;
 /**
  * 表逻辑删除字段 is_deleted 枚举
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/7/17
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public enum TableLogicDeleteFieldEnum {
 

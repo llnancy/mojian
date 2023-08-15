@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 /**
  * DesensitizeStrategy Test
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class DesensitizeStrategyTest {
 

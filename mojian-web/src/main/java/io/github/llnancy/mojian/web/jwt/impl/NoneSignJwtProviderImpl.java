@@ -8,8 +8,8 @@ import io.jsonwebtoken.Jwts;
 /**
  * jwt implementation with none sign
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/3
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class NoneSignJwtProviderImpl extends AbstractJwtProvider {
 

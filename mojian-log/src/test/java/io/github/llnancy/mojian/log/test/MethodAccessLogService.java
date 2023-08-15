@@ -6,8 +6,10 @@ import io.github.llnancy.mojian.log.enums.AccessType;
 import org.springframework.stereotype.Component;
 
 /**
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/6
+ * a service.
+ *
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Component
 public class MethodAccessLogService {

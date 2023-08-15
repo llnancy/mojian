@@ -3,8 +3,8 @@ package io.github.llnancy.mojian.log.enums;
 /**
  * 请求状态
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/2
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public enum RequestStatus {
 

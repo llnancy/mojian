@@ -15,8 +15,8 @@ import io.jsonwebtoken.Claims;
  * iat：发布时间
  * jti：JWT ID 用于标识该 JWT
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/3
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public interface JwtProvider {
 

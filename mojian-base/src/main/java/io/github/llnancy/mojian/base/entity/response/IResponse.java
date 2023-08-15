@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serial;
+
 /**
  * 基本响应对象
- * 提供常见的响应code、msg
+ * 提供常见的响应 code、msg
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/10/24
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Getter
 @AllArgsConstructor
@@ -19,6 +21,7 @@ import lombok.ToString;
 @ToString
 public class IResponse implements Response {
 
+    @Serial
     private static final long serialVersionUID = -804559387002430359L;
 
     /**

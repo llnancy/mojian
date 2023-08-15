@@ -14,8 +14,8 @@ import lombok.Data;
 /**
  * test bean
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Data
 public class TestBean {
