@@ -3,8 +3,8 @@ package io.github.llnancy.mojian.base.enums;
 /**
  * 表 status 字段枚举
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/2
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public enum TableStatusFieldEnum {
 

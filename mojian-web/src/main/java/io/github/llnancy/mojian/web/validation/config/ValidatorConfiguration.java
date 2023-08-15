@@ -6,15 +6,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 
 /**
  * jsr303 validator config fail-fast
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/4/5
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class ValidatorConfiguration {
 

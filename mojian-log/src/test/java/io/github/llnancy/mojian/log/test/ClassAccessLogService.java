@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/29
+ * a service.
+ *
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @AccessLog(value = "ClassAccessLogService-class", type = AccessType.STATUS)
 @Component

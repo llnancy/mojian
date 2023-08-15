@@ -3,6 +3,8 @@ package io.github.llnancy.mojian.web.advice;
 import io.github.llnancy.mojian.base.entity.response.IResponse;
 import io.github.llnancy.mojian.base.enums.ResponseEnum;
 import io.github.llnancy.mojian.base.exception.MjBaseBizException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
@@ -24,27 +26,23 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static cn.hutool.core.text.StrPool.COMMA;
-
 /**
  * 默认全局异常处理器
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/10/25
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Slf4j
-public class MjDefaultGlobalExceptionHandler {
+public class DefaultGlobalExceptionHandler {
 
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleBindException(BindException be) {
-        log.error("MjDefaultGlobalExceptionHandler#handleBindException", be);
+        log.error("DefaultGlobalExceptionHandler#handleBindException", be);
         return IResponse.ofFailure(
                 ResponseEnum.INVALID_PARAM.getCode(),
                 be.getBindingResult()
@@ -52,20 +50,20 @@ public class MjDefaultGlobalExceptionHandler {
                         .stream()
                         .filter(Objects::nonNull)
                         .map(FieldError::getDefaultMessage)
-                        .collect(Collectors.joining(COMMA))
+                        .collect(Collectors.joining(","))
         );
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handleConstraintViolationException(ConstraintViolationException cve) {
-        log.error("MjDefaultGlobalExceptionHandler#handleConstraintViolationException", cve);
+        log.error("DefaultGlobalExceptionHandler#handleConstraintViolationException", cve);
         return IResponse.ofFailure(
                 ResponseEnum.INVALID_PARAM.getCode(),
                 cve.getConstraintViolations()
                         .stream()
                         .map(ConstraintViolation::getMessage)
-                        .collect(Collectors.joining(COMMA))
+                        .collect(Collectors.joining(","))
         );
     }
 
@@ -87,7 +85,7 @@ public class MjDefaultGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public IResponse handle4xxClientError(Exception ex) {
-        log.error("MjDefaultGlobalExceptionHandler#handle4xxClientError", ex);
+        log.error("DefaultGlobalExceptionHandler#handle4xxClientError", ex);
         return IResponse.ofFailure(ResponseEnum.INVALID_PARAM.getCode(), ex.getMessage());
     }
 
@@ -98,7 +96,7 @@ public class MjDefaultGlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public IResponse handle5xxServerError(Exception ex) {
-        log.error("MjDefaultGlobalExceptionHandler#handle5xxServerError", ex);
+        log.error("DefaultGlobalExceptionHandler#handle5xxServerError", ex);
         return IResponse.ofFailure(ResponseEnum.FAILURE.getCode(), ex.getMessage());
     }
 }

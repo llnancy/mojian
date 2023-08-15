@@ -18,8 +18,8 @@ import java.util.Objects;
 /**
  * ip2region utils
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/1
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Slf4j
 public class Ip2regionUtils {

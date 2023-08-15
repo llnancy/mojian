@@ -10,16 +10,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * DesensitizeSerializer
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/23
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @JacksonStdImpl
 public class DesensitizeSerializer extends StdScalarSerializer<String> {
 
+    @Serial
     private static final long serialVersionUID = -2722597370008662311L;
 
     private final Desensitize desensitize;

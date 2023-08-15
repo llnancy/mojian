@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Bean;
 /**
  * JwtProvider configuration
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/3
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @EnableConfigurationProperties({JwtProperties.class})
 @ConditionalOnProperty(prefix = JwtProperties.MOJIAN_JWT, value = "enabled", matchIfMissing = true)

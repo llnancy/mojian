@@ -9,8 +9,8 @@ import java.util.function.Consumer;
 /**
  * {@link AccessLogEvent} listener
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/10/30
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @RequiredArgsConstructor
 public class AccessLogEventListener {

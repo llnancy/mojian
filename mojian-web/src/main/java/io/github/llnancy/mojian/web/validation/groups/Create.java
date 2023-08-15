@@ -1,12 +1,12 @@
 package io.github.llnancy.mojian.web.validation.groups;
 
-import javax.validation.groups.Default;
+import jakarta.validation.groups.Default;
 
 /**
  * create group
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/13
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public interface Create extends Default {
 }

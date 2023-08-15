@@ -3,14 +3,17 @@ package io.github.llnancy.mojian.base.exception;
 import cn.hutool.core.util.StrUtil;
 import io.github.llnancy.mojian.base.entity.response.Response;
 
+import java.io.Serial;
+
 /**
  * mj base biz exception
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/10/19
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public class MjBaseBizException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = -3792616129754882226L;
 
     /**

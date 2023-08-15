@@ -4,10 +4,6 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-/**
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/11/30
- */
 @SpringBootApplication
 public class AccessLogApplication {
 

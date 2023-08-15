@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 /**
  * data desensitize annotation
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/12/16
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

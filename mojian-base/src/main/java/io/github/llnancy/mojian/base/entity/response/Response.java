@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * API 响应
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2021/10/18
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 public interface Response extends Serializable {
 

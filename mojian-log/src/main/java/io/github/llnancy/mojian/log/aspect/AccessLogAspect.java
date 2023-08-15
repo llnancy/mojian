@@ -1,7 +1,7 @@
 package io.github.llnancy.mojian.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.extra.servlet.JakartaServletUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
@@ -17,6 +17,8 @@ import io.github.llnancy.mojian.log.enums.AccessType;
 import io.github.llnancy.mojian.log.enums.RequestStatus;
 import io.github.llnancy.mojian.log.event.AccessLogEvent;
 import io.github.llnancy.mojian.log.util.Ip2regionUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,8 +45,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -58,8 +58,8 @@ import static org.springframework.beans.factory.xml.BeanDefinitionParserDelegate
 /**
  * access log aspect
  *
- * @author sunchaser admin@lilu.org.cn
- * @since JDK8 2022/10/29
+ * @author llnancy admin@lilu.org.cn
+ * @since JDK17 2023/07/10
  */
 @Aspect
 @RequiredArgsConstructor
@@ -150,7 +150,7 @@ public class AccessLogAspect implements ApplicationContextAware {
             if (enableUserAgent) {
                 configureUserAgent(request, alb);
             }
-            String clientIP = ServletUtil.getClientIP(request);
+            String clientIP = JakartaServletUtil.getClientIP(request);
             alb.setRequestIp(clientIP);
             boolean enableRegion = context.enableRegion();
             if (enableRegion) {
