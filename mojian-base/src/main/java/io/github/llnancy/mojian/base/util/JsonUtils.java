@@ -2,6 +2,7 @@ package io.github.llnancy.mojian.base.util;
 
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -184,6 +185,14 @@ public class JsonUtils {
 
     public static String toJsonStringWithoutNull(Object object) {
         return doToJsonString(object, WITHOUT_NULL_MAPPER);
+    }
+
+    public static byte[] toBytes(Object object) {
+        try {
+            return COMMON_MAPPER.writeValueAsBytes(object);
+        } catch (JsonProcessingException e) {
+            throw new JsonException(e);
+        }
     }
 
     private static <T> void checkClass(Class<T> clazz) {
