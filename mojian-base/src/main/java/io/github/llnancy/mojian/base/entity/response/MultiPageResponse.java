@@ -1,15 +1,11 @@
 package io.github.llnancy.mojian.base.entity.response;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 多对象分页响应
@@ -59,14 +55,6 @@ public class MultiPageResponse<T> extends MultiResponse<T> {
 
     public static <T> MultiPageResponse<T> success(Integer code, String msg, Collection<T> data, Long count, Boolean hasNext) {
         return new MultiPageResponse<>(code, msg, data, count, hasNext);
-    }
-
-    public static <T, R> MultiPageResponse<T> success(Page<R> page, Function<? super R, ? extends T> mapper) {
-        List<T> collect = page.getRecords()
-                .stream()
-                .map(mapper)
-                .collect(Collectors.toList());
-        return success(collect, page.getTotal(), page.hasNext());
     }
 
     public static <T> MultiPageResponse<T> failure() {
