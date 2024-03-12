@@ -1,7 +1,5 @@
 package io.github.llnancy.mojian.base.util;
 
-import org.springframework.beans.BeanUtils;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -58,10 +56,6 @@ public class Optionals {
 
     public static <T> Set<T> of(Set<T> set) {
         return Optional.ofNullable(set).orElseGet(Collections::emptySet);
-    }
-
-    public static <T> T of(T t, Class<T> clazz) {
-        return Optional.ofNullable(t).orElseGet(() -> BeanUtils.instantiateClass(clazz));
     }
 
     public static <T> T of(T t, T defaultValue) {
