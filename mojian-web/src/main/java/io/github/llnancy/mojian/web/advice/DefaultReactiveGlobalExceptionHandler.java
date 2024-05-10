@@ -1,21 +1,17 @@
 package io.github.llnancy.mojian.web.advice;
 
-import io.github.llnancy.mojian.base.entity.response.IResponse;
-import io.github.llnancy.mojian.base.enums.ResponseEnum;
-import io.github.llnancy.mojian.base.exception.MjBaseBizException;
+import io.github.llnancy.mojian.base.util.JsonUtils;
+import io.github.llnancy.mojian.web.advice.handler.ExceptionHandlerFactory;
+import io.github.llnancy.mojian.web.advice.handler.IExceptionHandler;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.server.MissingRequestValueException;
-import org.springframework.web.server.ServerWebInputException;
+import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.core.Ordered;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.lang.NonNull;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * reactive global exception handler
@@ -24,42 +20,27 @@ import java.util.stream.Collectors;
  * @since JDK17 2023/8/15
  */
 @Slf4j
-public class DefaultReactiveGlobalExceptionHandler {
+@RequiredArgsConstructor
+public class DefaultReactiveGlobalExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 
-    @ExceptionHandler({
-            SQLIntegrityConstraintViolationException.class,
-            RuntimeException.class,
-            MjBaseBizException.class
-    })
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Mono<IResponse> handle5xxServerError(Exception ex) {
-        log.error("DefaultReactiveGlobalExceptionHandler#handle5xxServerError", ex);
-        return Mono.just(IResponse.ofFailure(ResponseEnum.FAILURE.getCode(), ResponseEnum.FAILURE.getMsg()));
+    private final ExceptionHandlerFactory factory;
+
+    @NonNull
+    @Override
+    public Mono<Void> handle(ServerWebExchange exchange, @NonNull Throwable ex) {
+        ServerHttpResponse response = exchange.getResponse();
+        if (response.isCommitted()) {
+            return Mono.error(ex);
+        }
+        IExceptionHandler match = factory.match(ex);
+        log.error("[mojian] - default reactive global exception handler, match handler is {}.", match.getClass(), ex);
+        response.setStatusCode(match.getStatusCode());
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        return response.writeWith(Mono.just(response.bufferFactory().wrap(JsonUtils.toBytes(match.getResponse()))));
     }
 
-    @ExceptionHandler({
-            WebExchangeBindException.class,
-    })
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Mono<IResponse> handleWebExchangeBindException(WebExchangeBindException ex) {
-        log.error("DefaultReactiveGlobalExceptionHandler#handleWebExchangeBindException", ex);
-        return Mono.just(
-                IResponse.ofFailure(
-                        ResponseEnum.INVALID_PARAM.getCode(),
-                        ex.getBindingResult()
-                                .getFieldErrors()
-                                .stream()
-                                .filter(Objects::nonNull)
-                                .map(FieldError::getDefaultMessage)
-                                .collect(Collectors.joining(","))
-                )
-        );
-    }
-
-    @ExceptionHandler({MissingRequestValueException.class, ServerWebInputException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Mono<IResponse> handleMissingRequestValueException(ServerWebInputException ex) {
-        log.error("DefaultReactiveGlobalExceptionHandler#handleMissingRequestValueException", ex);
-        return Mono.just(IResponse.ofFailure(ResponseEnum.INVALID_PARAM.getCode(), ex.getReason()));
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }

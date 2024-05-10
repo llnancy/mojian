@@ -56,6 +56,14 @@ public class IResponse implements Response {
         return FAILURE;
     }
 
+    public static IResponse ofFailure(Integer code) {
+        return ofFailure(code, FAILURE.msg);
+    }
+
+    public static IResponse ofFailure(String msg) {
+        return ofFailure(FAILURE.code, msg);
+    }
+
     public static IResponse ofFailure(Response res) {
         return of(res);
     }
