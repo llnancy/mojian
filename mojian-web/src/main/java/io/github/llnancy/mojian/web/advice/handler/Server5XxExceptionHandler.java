@@ -37,6 +37,6 @@ public class Server5XxExceptionHandler extends AbstractExceptionHandler {
 
     @Override
     protected void doFormatIResponse(Throwable ex) {
-        this.setResponse(IResponse.ofFailure());
+        this.setResponse(IResponse.ofFailure(ex.getMessage()));
     }
 }

@@ -78,9 +78,9 @@
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <revision>3.0.0-SNAPSHOT</revision>
+        <revision>3.3.0-SNAPSHOT</revision>
         <mojian.version>${revision}</mojian.version>
-        <springboot.version>3.1.1</springboot.version>
+        <springboot.version>3.3.0</springboot.version>
     </properties>
 
     <dependencyManagement>

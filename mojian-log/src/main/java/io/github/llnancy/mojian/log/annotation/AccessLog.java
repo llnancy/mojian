@@ -31,7 +31,7 @@ public @interface AccessLog {
 
     boolean enableUserAgent() default true;
 
-    boolean enableRegion() default true;
+    boolean enableRegion() default false;
 
     boolean enableRequest() default true;
 
