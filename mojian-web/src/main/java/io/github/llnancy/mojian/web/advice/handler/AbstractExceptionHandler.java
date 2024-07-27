@@ -1,6 +1,7 @@
 package io.github.llnancy.mojian.web.advice.handler;
 
 import io.github.llnancy.mojian.base.entity.response.IResponse;
+import lombok.Setter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatusCode;
 
@@ -18,6 +19,7 @@ public abstract class AbstractExceptionHandler implements IExceptionHandler, Ord
 
     private final HttpStatusCode httpStatus;
 
+    @Setter
     private IResponse response;
 
     public AbstractExceptionHandler(List<Class<? extends Throwable>> exceptionClasses, HttpStatusCode httpStatus) {
@@ -38,10 +40,6 @@ public abstract class AbstractExceptionHandler implements IExceptionHandler, Ord
     @Override
     public IResponse getResponse() {
         return response;
-    }
-
-    public void setResponse(IResponse response) {
-        this.response = response;
     }
 
     @Override
