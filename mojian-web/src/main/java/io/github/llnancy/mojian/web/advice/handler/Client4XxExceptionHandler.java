@@ -18,6 +18,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -59,7 +60,8 @@ public class Client4XxExceptionHandler extends AbstractExceptionHandler {
                         MissingServletRequestPartException.class,
                         NoHandlerFoundException.class,
                         AsyncRequestTimeoutException.class,
-                        IllegalArgumentException.class
+                        IllegalArgumentException.class,
+                        NoResourceFoundException.class
                 ),
                 HttpStatus.BAD_REQUEST
         );
