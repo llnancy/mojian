@@ -1,6 +1,5 @@
 package io.github.llnancy.mojian.base.util;
 
-import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
@@ -20,6 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serial;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -63,12 +63,12 @@ public class JsonUtils {
 
     public static void configureJava8Time(ObjectMapper objectMapper) {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DatePattern.NORM_DATETIME_FORMATTER));
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DatePattern.NORM_DATE_FORMATTER));
-        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DatePattern.NORM_TIME_FORMATTER));
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DatePattern.NORM_DATETIME_FORMATTER));
-        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DatePattern.NORM_DATE_FORMATTER));
-        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DatePattern.NORM_TIME_FORMATTER));
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeUtils.NORM_DATETIME_FORMATTER));
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeUtils.NORM_DATE_FORMATTER));
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeUtils.NORM_TIME_FORMATTER));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeUtils.NORM_DATETIME_FORMATTER));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeUtils.NORM_DATE_FORMATTER));
+        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeUtils.NORM_TIME_FORMATTER));
         objectMapper.registerModule(javaTimeModule);
     }
 
@@ -205,6 +205,7 @@ public class JsonUtils {
 
     public static class JsonException extends RuntimeException {
 
+        @Serial
         private static final long serialVersionUID = 530060844406057111L;
 
         public JsonException(Throwable cause) {

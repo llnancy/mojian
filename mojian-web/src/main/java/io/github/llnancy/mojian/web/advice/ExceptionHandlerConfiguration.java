@@ -70,13 +70,8 @@ public class ExceptionHandlerConfiguration {
 
     @Bean
     @DependsOn("exceptionHandlerFactory")
+    @ConditionalOnClass(name = {"org.springframework.web.reactive.function.server.RouterFunctions"})
     public DefaultReactiveGlobalExceptionHandler defaultReactiveGlobalExceptionHandler(ExceptionHandlerFactory factory) {
         return new DefaultReactiveGlobalExceptionHandler(factory);
-    }
-
-    @Bean
-    @DependsOn("exceptionHandlerFactory")
-    public DefaultGlobalExceptionHandler defaultGlobalExceptionHandler(ExceptionHandlerFactory factory) {
-        return new DefaultGlobalExceptionHandler(factory);
     }
 }
