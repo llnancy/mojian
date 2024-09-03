@@ -1,7 +1,7 @@
 package io.github.llnancy.mojian.base.exception;
 
-import cn.hutool.core.util.StrUtil;
 import io.github.llnancy.mojian.base.entity.response.Response;
+import lombok.Getter;
 
 import java.io.Serial;
 
@@ -11,6 +11,7 @@ import java.io.Serial;
  * @author llnancy admin@lilu.org.cn
  * @since JDK17 2023/07/10
  */
+@Getter
 public class MjBaseBizException extends RuntimeException {
 
     @Serial
@@ -28,21 +29,21 @@ public class MjBaseBizException extends RuntimeException {
      * @param args     占位符参数
      */
     public MjBaseBizException(Response response, Object... args) {
-        super(StrUtil.format(response.getMsg(), args));
+        super(String.format(response.getMsg(), args));
         this.code = response.getCode();
     }
 
     public MjBaseBizException(Integer code, String message, Object... args) {
-        super(StrUtil.format(message, args));
+        super(String.format(message, args));
         this.code = code;
     }
 
     public MjBaseBizException(String message, Object... args) {
-        super(StrUtil.format(message, args));
+        super(String.format(message, args));
     }
 
     public MjBaseBizException(String message, Throwable cause, Object... args) {
-        super(StrUtil.format(message, args), cause);
+        super(String.format(message, args), cause);
     }
 
     public MjBaseBizException(Throwable cause) {
@@ -52,7 +53,4 @@ public class MjBaseBizException extends RuntimeException {
     public MjBaseBizException() {
     }
 
-    public Integer getCode() {
-        return code;
-    }
 }

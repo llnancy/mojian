@@ -1,13 +1,14 @@
 package io.github.llnancy.mojian.web.jwt.impl;
 
-import cn.hutool.core.io.FileUtil;
 import io.github.llnancy.mojian.web.config.property.JwtProperties;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import lombok.SneakyThrows;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -42,7 +43,7 @@ public class PublicPrivateKeyJwtProviderImpl extends AbstractJwtProvider {
 
     @SneakyThrows
     private PublicKey getPublicKey() {
-        String publicStr = FileUtil.readString(jwtProperties.getPublicKeyLocation(), StandardCharsets.UTF_8);
+        String publicStr = FileUtils.readFileToString(new File(jwtProperties.getPublicKeyLocation()), StandardCharsets.UTF_8);
         byte[] decode = Decoders.BASE64.decode(publicStr);
         X509EncodedKeySpec spec = new X509EncodedKeySpec(decode);
         KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -51,7 +52,7 @@ public class PublicPrivateKeyJwtProviderImpl extends AbstractJwtProvider {
 
     @SneakyThrows
     private PrivateKey getPrivateKey() {
-        String privateStr = FileUtil.readString(jwtProperties.getPrivateKeyLocation(), StandardCharsets.UTF_8);
+        String privateStr = FileUtils.readFileToString(new File(jwtProperties.getPrivateKeyLocation()), StandardCharsets.UTF_8);
         byte[] decode = Decoders.BASE64.decode(privateStr);
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decode);
         KeyFactory kf = KeyFactory.getInstance("RSA");

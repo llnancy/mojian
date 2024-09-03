@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * enable jackson config
+ * enable jackson local-date-time formatter config
  *
  * @author llnancy admin@lilu.org.cn
  * @since JDK17 2023/07/10
@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import(JacksonConfiguration.class)
-public @interface EnableMjJackson {
+public @interface EnableJacksonLocalDateTimeFormatter {
 }
