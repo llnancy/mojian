@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.llnancy</groupId>
+        <artifactId>mojian-web</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mojian-web-all</artifactId>
+    <packaging>jar</packaging>
+
+    <description>
+        魔剑 - 业务开发工具集：web 模块，提供 Web 开发常用功能，包含全局异常处理器、Jackson 日期格式化配置、JSR303 分组校验接口及快速失败配置等。
+    </description>
+
+    <!-- ====================================================== -->
+    <!--                        开发者介绍                       -->
+    <!-- ====================================================== -->
+    <developers>
+        <developer>
+            <name>llnancy</name>
+            <email>admin@lilu.org.cn</email>
+            <url>https://lilu.org.cn</url>
+        </developer>
+    </developers>
+
+    <!-- ====================================================== -->
+    <!--                      组件依赖管理                        -->
+    <!-- ====================================================== -->
+    <dependencies>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web-advice</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web-reactive-advice</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web-time-formatter</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web-validation</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

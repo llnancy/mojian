@@ -11,6 +11,7 @@
         <version>${revision}</version>
     </parent>
     <modules>
+        <module>mojian-web-all</module>
         <module>mojian-web-advice</module>
         <module>mojian-web-reactive-advice</module>
         <module>mojian-web-time-formatter</module>
