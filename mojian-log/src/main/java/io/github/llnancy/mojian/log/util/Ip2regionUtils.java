@@ -32,7 +32,7 @@ public class Ip2regionUtils {
     /**
      * 内网 IP
      */
-    private static final String LOCALHOST_REGION = "内网IP";
+    private static final String LOCALHOST_REGION = "内网 IP";
 
     /**
      * 未知 IP
@@ -95,8 +95,9 @@ public class Ip2regionUtils {
     }
 
     /**
-     * eg. 中国|0|浙江省|杭州市|电信
-     *
+     * // autocorrect: false
+     * eg. 中国|0|浙江省 | 杭州市 | 电信
+     * // autocorrect: true
      * @param ip ip address
      * @return region
      */

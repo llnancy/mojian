@@ -30,7 +30,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Json工具类
+ * Json 工具类
  *
  * @author llnancy admin@lilu.org.cn
  * @since JDK17 2023/07/10
@@ -54,7 +54,7 @@ public class JsonUtils {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         // 忽略在 json 字符串中存在，但是在 Java 类中不存在对应属性时抛出的异常
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 解析含有结束语控制字符(如：ASCII < 32，包含制表符 \t、换行符 \n 和回车 \r)
+        // 解析含有结束语控制字符 (如：ASCII < 32，包含制表符 \t、换行符 \n 和回车 \r)
         objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
         // 配置使用 Java8 的 LocalDateTime 时间模块，避免序列化和反序列化出错
         configureJava8Time(objectMapper);

@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 import com.fasterxml.jackson.databind.ser.std.StdScalarSerializer;
 import io.github.llnancy.mojian.desensitize.annotation.Desensitize;
 import io.github.llnancy.mojian.desensitize.strategy.DesensitizeStrategy;
-import org.springframework.beans.BeanUtils;
-import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.Serial;
@@ -26,21 +24,17 @@ public class DesensitizeSerializer extends StdScalarSerializer<String> {
 
     private final Desensitize desensitize;
 
-    public DesensitizeSerializer(Desensitize desensitize) {
+    private final DesensitizeStrategy desensitizeStrategy;
+
+    public DesensitizeSerializer(Desensitize desensitize, DesensitizeStrategy desensitizeStrategy) {
         super(String.class, false);
-        Assert.notNull(desensitize, "Desensitize annotation must not be null!");
         this.desensitize = desensitize;
+        this.desensitizeStrategy = desensitizeStrategy;
     }
 
     @Override
     public void serialize(String value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        Class<? extends DesensitizeStrategy> strategyClazz = desensitize.strategy();
         String ch = desensitize.placeholder();
-        if (strategyClazz.isInterface()) {
-            gen.writeString(DesensitizeStrategy.DEFAULT_INSTANCE.desensitize(value, ch));
-            return;
-        }
-        DesensitizeStrategy strategy = BeanUtils.instantiateClass(strategyClazz);
-        gen.writeString(strategy.desensitize(value, ch));
+        gen.writeString(desensitizeStrategy.desensitize(value, ch));
     }
 }

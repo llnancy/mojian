@@ -7,9 +7,8 @@
     <!-- ====================================================== -->
     <parent>
         <groupId>io.github.llnancy</groupId>
-        <artifactId>mojian-bom</artifactId>
+        <artifactId>mojian-parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../mojian-bom</relativePath>
     </parent>
 
     <!-- ====================================================== -->
@@ -50,11 +49,15 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -74,21 +77,25 @@
         <dependency>
             <groupId>io.github.llnancy</groupId>
             <artifactId>mojian-base</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.github.llnancy</groupId>
             <artifactId>mojian-desensitize</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-extra</artifactId>
-            <version>5.8.19</version>
+            <version>5.8.32</version>
         </dependency>
+        <!-- UA 解析 -->
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.21</version>
         </dependency>
+        <!-- ip 归属地查询 -->
         <dependency>
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>

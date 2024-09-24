@@ -22,10 +22,10 @@ public class DesensitizeStrategyTest {
 
     @Test
     public void testAddress() {
-        String address = "浙江省杭州市滨江区网商路666号";
+        String address = "浙江省杭州市滨江区网商路 666 号";
         DesensitizeStrategy strategy = new AddressDesensitizeStrategy();
         String desensitize = strategy.desensitize(address);
-        Assertions.assertEquals("浙江省杭州市**********", desensitize);
+        Assertions.assertEquals("浙江省杭州市************", desensitize);
     }
 
     @Test

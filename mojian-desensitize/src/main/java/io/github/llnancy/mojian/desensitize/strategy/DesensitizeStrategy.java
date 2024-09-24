@@ -10,7 +10,7 @@ public interface DesensitizeStrategy {
 
     String DEFAULT_PLACEHOLDER = "*";
 
-    DesensitizeStrategy DEFAULT_INSTANCE = new DesensitizeStrategy() {
+    DesensitizeStrategy NOP_INSTANCE = new DesensitizeStrategy() {
     };
 
     default String desensitize(String source) {
