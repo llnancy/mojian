@@ -43,4 +43,7 @@ public class TestBean {
 
     @Desensitize(strategy = PasswordDesensitizeStrategy.class)
     private String password;
+
+    @Desensitize(strategy = PasswordDesensitizeStrategy.class)
+    private String password2;
 }

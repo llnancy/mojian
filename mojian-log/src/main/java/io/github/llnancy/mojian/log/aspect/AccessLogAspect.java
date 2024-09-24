@@ -9,7 +9,7 @@ import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.github.llnancy.mojian.base.util.JsonUtils;
 import io.github.llnancy.mojian.base.util.Optionals;
-import io.github.llnancy.mojian.desensitize.support.DesensitizeConfiguration;
+import io.github.llnancy.mojian.desensitize.core.DesensitizeAnnotationIntrospector;
 import io.github.llnancy.mojian.log.annotation.AccessLog;
 import io.github.llnancy.mojian.log.config.property.AccessLogProperties;
 import io.github.llnancy.mojian.log.entity.AccessLogBean;
@@ -69,7 +69,7 @@ public class AccessLogAspect implements ApplicationContextAware {
 
     static {
         JsonUtils.commonInit(OBJECT_MAPPER);
-        DesensitizeConfiguration.configureAnnotationIntrospector(OBJECT_MAPPER);
+        DesensitizeAnnotationIntrospector.configureAnnotationIntrospector(OBJECT_MAPPER);
     }
 
     private final AccessLogProperties accessLogProperties;

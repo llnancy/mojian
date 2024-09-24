@@ -59,12 +59,32 @@
         </dependency>
         <dependency>
             <groupId>io.github.llnancy</groupId>
-            <artifactId>mojian-web</artifactId>
+            <artifactId>mojian-web-advice</artifactId>
             <version>${mojian.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.llnancy</groupId>
-            <artifactId>mojian-desensitize</artifactId>
+            <artifactId>mojian-web-reactive-advice</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web-time-formatter</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-web-validation</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-desensitize-spring-boot-starter</artifactId>
+            <version>${mojian.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.llnancy</groupId>
+            <artifactId>mojian-jwt-spring-boot-starter</artifactId>
             <version>${mojian.version}</version>
         </dependency>
     </dependencies>

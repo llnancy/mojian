@@ -26,11 +26,12 @@ public class JacksonTest {
         testBean.setName("李逍遥");
         testBean.setEmail("admin@lilu.org.cn");
         testBean.setMobile("15208900746");
-        testBean.setAddress("浙江省杭州市滨江区网商路666号");
+        testBean.setAddress("浙江省杭州市滨江区网商路 666 号");
         testBean.setBankCard("6212364646483232455");
         testBean.setFixedPhone("076512344321");
         testBean.setIdCard("421083199905126789");
         testBean.setPassword("LoveNancy");
+        testBean.setPassword2("LoveNancy");
     }
 
     @Test
@@ -39,6 +40,6 @@ public class JacksonTest {
         AnnotationIntrospector ai = mapper.getSerializationConfig().getAnnotationIntrospector();
         mapper.setAnnotationIntrospector(AnnotationIntrospectorPair.pair(ai, new DesensitizeAnnotationIntrospector()));
         String value = mapper.writeValueAsString(testBean);
-        log.info("value: {}", value);
+        System.out.println("value: " + value);
     }
 }
