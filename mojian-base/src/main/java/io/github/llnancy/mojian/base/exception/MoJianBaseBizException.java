@@ -1,6 +1,7 @@
 package io.github.llnancy.mojian.base.exception;
 
 import io.github.llnancy.mojian.base.entity.response.Response;
+import io.github.llnancy.mojian.base.enums.ResponseEnum;
 import lombok.Getter;
 
 import java.io.Serial;
@@ -20,7 +21,7 @@ public class MoJianBaseBizException extends RuntimeException {
     /**
      * 异常码
      */
-    private Integer code;
+    private Integer code = ResponseEnum.FAILURE.getCode();
 
     /**
      * use String.format()
