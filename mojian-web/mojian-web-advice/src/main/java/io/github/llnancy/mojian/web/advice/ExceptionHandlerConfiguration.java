@@ -11,7 +11,6 @@ import jakarta.servlet.ServletException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.AuthenticationException;
 
 /**
  * {@link IExceptionHandler} configuration
@@ -27,7 +26,7 @@ public class ExceptionHandlerConfiguration {
     }
 
     @Bean
-    @ConditionalOnClass({AuthenticationException.class})
+    @ConditionalOnClass(name = {"org.springframework.security.core.AuthenticationException"})
     public AuthenticationExceptionHandler authenticationExceptionHandler() {
         return new AuthenticationExceptionHandler();
     }
